@@ -37,13 +37,59 @@ CREATE TABLE IF NOT EXISTS game (
 
     # CREATE TABLE "game_gamer"
     query_execute(cur, f'''
-CREATE TABLE game_gamer (
+CREATE TABLE IF NOT EXISTS game_gamer (
 	game_id INTEGER NOT NULL,
 	gamer_id INTEGER NOT NULL,
 	alias TEXT NOT NULL,
 	score INTEGER NOT NULL,
 	CONSTRAINT game_gamer_PK PRIMARY KEY (game_id,gamer_id)
+    CONSTRAINT game_gamer_FK FOREIGN KEY (game_id) REFERENCES game(id),
+	CONSTRAINT game_gamer_FK_1 FOREIGN KEY (gamer_id) REFERENCES gamer(id)
 );''')
     
+    # CREATE TABLE "param"
+    query_execute(cur, f'''
+CREATE TABLE IF NOT EXISTS param (
+	small_dice INTEGER NOT NULL,
+	big_dice INTEGER NOT NULL,
+	max_player INTEGER NOT NULL
+);''')
+    
+    # CREATE TABLE "categorie"
+    query_execute(cur, f'''
+CREATE TABLE IF NOT EXISTS categorie (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	name TEXT NOT NULL
+);''')
+    query_execute(cur, f'''CREATE UNIQUE INDEX IF NOT EXISTS categorie_name_IDX ON categorie (name);''')
+
+    # CREATE TABLE "question"
+    query_execute(cur, f'''
+CREATE TABLE IF NOT EXISTS question (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	categorie_id INTEGER NOT NULL,
+	question TEXT NOT NULL,
+	CONSTRAINT question_FK FOREIGN KEY (categorie_id) REFERENCES categorie(id)
+);''')
+    
+    # CREATE TABLE "answer"
+    query_execute(cur, f'''
+CREATE TABLE IF NOT EXISTS answer (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	question_id INTEGER NOT NULL,
+	answer TEXT NOT NULL,
+	good_answer INTEGER NOT NULL,
+	CONSTRAINT answer_FK FOREIGN KEY (question_id) REFERENCES question(id)
+);''')
+    
+    #paramètre par défaut du jeu 
+    query_execute(cur, f'''
+    DELETE FROM param 
+    ''')
+    query_execute(cur, f'''
+    INSERT INTO param VALUES (4, 18, 8)
+    ''')
+    
     # Fermeture de la connexion
+    conn.commit()
     conn.close()
