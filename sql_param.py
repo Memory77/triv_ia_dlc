@@ -1,18 +1,28 @@
 import sqlite3
 
-def query_execute(cur, query: str):
+def query_execute(cur, query: str, select: str = ''):
+    # permet d'essayer d'exécuter une requête et de renvoyer les données
+    # si la requête ne fonctionne pas, un print sera fait de la requête intégrant les paramètres
+    # la requête pourra être réexécuée à l'identique dans DVeaver pour débogage
+
     try:
         cur.execute(query)
+        if select == 'SELECT':
+            return cur.fetchone()
 
     except:
         query_error(query)
 
+
 def query_error(query: str):
+    # print des requêtes d'effectueuses
+
     print("")
     print("/!\\")
     print("La requête suivant n'a pas pu être exécutée : ", query)
     print("/!\\")
     print("")
+
 
 def init_db():
     # new connexion (create db if doesn't exist)
@@ -62,25 +72,16 @@ CREATE TABLE IF NOT EXISTS categorie (
 	CONSTRAINT categorie_PK PRIMARY KEY (name)
 );''')
     query_execute(cur, f'''CREATE UNIQUE INDEX IF NOT EXISTS categorie_name_IDX ON categorie (name);''')
-
-    # CREATE TABLE "question"
-    query_execute(cur, f'''
-CREATE TABLE IF NOT EXISTS question (
-	categorie_name TEXT NOT NULL,
-	question TEXT NOT NULL,
-	CONSTRAINT question_PK PRIMARY KEY (categorie_name,question),
-	CONSTRAINT question_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
-);''')
     
     # CREATE TABLE "answer"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS answer (
 	categorie_name TEXT NOT NULL,
-	question_question TEXT NOT NULL,
+	question TEXT NOT NULL,
 	answer TEXT NOT NULL,
-	good_answer INTEGER NOT NULL,
-	CONSTRAINT answer_PK PRIMARY KEY (categorie_name,question_question,answer),
-	CONSTRAINT answer_FK FOREIGN KEY (categorie_name,question_question) REFERENCES question(categorie_name,question)
+	good_answer BOOL NOT NULL,
+	CONSTRAINT answer_PK PRIMARY KEY (categorie_name,question,answer),
+	CONSTRAINT answer_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
 );''')
     
     #paramètre par défaut du jeu 
@@ -94,3 +95,13 @@ CREATE TABLE IF NOT EXISTS answer (
     # Fermeture de la connexion
     conn.commit()
     conn.close()
+
+
+def gen_param() -> tuple:
+    # récupération des paramètres généraux pour le fonctionnement du jeu
+    
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    res = query_execute(cur, f'SELECT * FROM param', 'SELECT')
+    conn.close()
+    return res
