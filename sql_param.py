@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS gamer (
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS game (
     id INTEGER PRIMARY KEY,
-    datetime TEXT NOT NULL,
+    datetime DATETIME NOT NULL,
     dice_type INTEGER NOT NULL);''')
 
     # CREATE TABLE "game_gamer"
@@ -58,28 +58,29 @@ CREATE TABLE IF NOT EXISTS param (
     # CREATE TABLE "categorie"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS categorie (
-	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	name TEXT NOT NULL
+	name TEXT NOT NULL,
+	CONSTRAINT categorie_PK PRIMARY KEY (name)
 );''')
     query_execute(cur, f'''CREATE UNIQUE INDEX IF NOT EXISTS categorie_name_IDX ON categorie (name);''')
 
     # CREATE TABLE "question"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS question (
-	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	categorie_id INTEGER NOT NULL,
+	categorie_name TEXT NOT NULL,
 	question TEXT NOT NULL,
-	CONSTRAINT question_FK FOREIGN KEY (categorie_id) REFERENCES categorie(id)
+	CONSTRAINT question_PK PRIMARY KEY (categorie_name,question),
+	CONSTRAINT question_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
 );''')
     
     # CREATE TABLE "answer"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS answer (
-	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	question_id INTEGER NOT NULL,
+	categorie_name TEXT NOT NULL,
+	question_question TEXT NOT NULL,
 	answer TEXT NOT NULL,
 	good_answer INTEGER NOT NULL,
-	CONSTRAINT answer_FK FOREIGN KEY (question_id) REFERENCES question(id)
+	CONSTRAINT answer_PK PRIMARY KEY (categorie_name,question_question,answer),
+	CONSTRAINT answer_FK FOREIGN KEY (categorie_name,question_question) REFERENCES question(categorie_name,question)
 );''')
     
     #paramètre par défaut du jeu 
@@ -87,7 +88,7 @@ CREATE TABLE IF NOT EXISTS answer (
     DELETE FROM param 
     ''')
     query_execute(cur, f'''
-    INSERT INTO param VALUES (4, 18, 8)
+    INSERT INTO param VALUES (4, 10, 8)
     ''')
     
     # Fermeture de la connexion
