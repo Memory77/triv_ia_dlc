@@ -2,7 +2,10 @@
 classes pour la gestion du jeu
 '''
 
-class game:
+import gamers
+
+class NewGame:
     def __init__(self, nb_gamers: int):
-        for i in range(len(nb_gamers)):
-            pass
+        self.gamers = []
+        for i in range(nb_gamers):
+            self.gamers.append(gamers.Gamer(0, 0, i))

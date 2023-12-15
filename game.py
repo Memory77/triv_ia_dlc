@@ -1,6 +1,6 @@
 import sql_param
 import sql_game
-import new_game
+from new_game import NewGame
 import os
 import sys
 
@@ -26,3 +26,4 @@ if nb_gamers < 2 or nb_gamers > max_player:
     print("Quel dommage de vous voir partir ainsi, en ne sachant pas répondre correctement à cette question !")
     sys.exit()
 
+game = NewGame(nb_gamers)
