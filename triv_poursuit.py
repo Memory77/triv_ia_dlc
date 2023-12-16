@@ -41,14 +41,14 @@ interface_bg_color = (255, 255, 255)
 interface_image = pygame.image.load('img/interface_img.png')  
 interface_image = pygame.transform.scale(interface_image, (interface_width, interface_height))  # redimensionner l'image
 
-# dimensions de l'écran de l'interface (questions etc)
+# dimensions du bouton principal de l'interface pour l'interaction(dé, questions etc)
 button_x = interface_x + 50
 button_y = 100
 button_width = 400
 button_height = 50
 active_color = (255, 105, 180)
 inactive_color = (10, 210, 255)
-current_player_index = 0  # Index du joueur actuel
+
 
 
 ## === PLATEAU DE JEU (coté gauche, cependant, il est réellement defini dans la boucle de jeu car doit se mettre à jour)
@@ -58,15 +58,33 @@ cat_id = [1, 6, 4, 8, 9] #requete en bdd pour récupérer toutes les catégories
 
 np.random.seed(5)#graine pour figer le random choice mais c pas obligé en soit
 game_board = np.random.choice(cat_id, size=(15, 25))
-#print(game_board)
-    
+
+limitations = [
+    [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7],
+    [0, 8], [0, 9], [0, 10], [0, 11], [0, 12], [0, 13], [0, 14],
+    [0, 15], [0, 16], [0, 17], [0, 18], [0, 19], [0, 20], [0, 21],
+    [0, 22], [0, 23], [0, 24], [1, 0], [2, 0], [1, 1], [1, 24], [1, 23], [2, 24],
+    [14, 0], [14, 1], [14, 2], [14, 3], [14, 4], [14, 5], [14, 6], [14, 7],
+    [14, 8], [14, 9], [14, 10], [14, 11], [14, 12], [14, 13], [14, 14],
+    [14, 15], [14, 16], [14, 17], [14, 18], [14, 19], [14, 20], [14, 21],
+    [14, 22], [14, 23], [14, 24], [14, 18], [14, 19], [14, 20], [14, 21],
+    ## continuer les limitations
+]
+for coords in limitations:
+    y, x = coords
+    game_board[y, x] = False
+print(game_board)
+
+
 # definition d'une couleur pour chaque catégorie
 #1 -> rose
 #2 -> vert
 #3 -> bleu
 #4 -> jaune
 #5 -> purple
-colors = {cat_id[0]: (255, 105, 180), cat_id[1]: (119, 221, 119), cat_id[2]: (10, 210, 255), cat_id[3]: (255, 255, 102), cat_id[4]: (190, 35, 253)}
+#false -> noir
+colors = {cat_id[0]: (255, 105, 180), cat_id[1]: (119, 221, 119), cat_id[2]: (10, 210, 255), 
+          cat_id[3]: (255, 255, 102), cat_id[4]: (190, 35, 253), False: (18, 12, 58)}
 
 # definition de la largeur du plateau de jeu en soustrayant la largeur de l'interface
 game_board_width = width - interface_width
@@ -85,7 +103,7 @@ for num_joueur in range(1, nombre_de_joueurs + 1):
     nouveau_joueur = Gamer(0, 0, num_joueur)
     joueurs.append(nouveau_joueur)
     gamer_sprites.add(nouveau_joueur)
-    nouveau_joueur.set_position(0, 0, cell_width, cell_height)
+    nouveau_joueur.set_position(7, 12, cell_width, cell_height)
     nouveau_joueur.set_image()
 
 #creation des camemberts
@@ -134,7 +152,8 @@ fall_one.set_image()
 ETAT_LANCER_DE = 1
 ETAT_QUESTION = 2
 etat_jeu = ETAT_LANCER_DE
-
+current_player_index = 0
+dice_roll = 0
 
 # Boucle principale
 running = True
@@ -162,7 +181,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             
-            
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if button_x + button_width > event.pos[0] > button_x and button_y + button_height > event.pos[1] > button_y:
                 dice_roll = roll_dice()
@@ -184,30 +202,44 @@ while running:
                 
             # Après le mouvement, vérifiez si le joueur a utilisé tous ses mouvements
             if player_moves == 0:
-                # Passer au joueur suivant
+                dice_roll = 0
+                etat_jeu = ETAT_QUESTION
+                #Passer au joueur suivant une fois toutes les étapes #mettre en com les deux lignes suivante pour test l'étape 2
                 current_player_index = (current_player_index + 1) % nombre_de_joueurs
                 etat_jeu = ETAT_LANCER_DE  # Réinitialiser l'état du jeu pour le prochain joueur
-        
-    # màjour du texte du bouton en fonction de l'état du jeu
-    if etat_jeu == ETAT_LANCER_DE:
-        texte_bouton = f"Joueur {current_player_index + 1} : Lancer le dé"
-    elif etat_jeu == ETAT_QUESTION:
-        texte_bouton = "Répondre à la question"
+    
 
-  
     
-    
-    
-    
-    
-    #definition de l'interface
+    #definition visuel de l'interface
     interface_rect = pygame.Rect(interface_x, interface_y, interface_width, interface_height)
     pygame.draw.rect(screen, interface_bg_color, interface_rect)
-    # Afficher l'image de l'interface
+    # afficher l'image de l'interface
     screen.blit(interface_image, (interface_x, interface_y))
     
-    draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color)
-    
+     # màjour du texte du bouton en fonction de l'état du jeu
+    if etat_jeu == ETAT_LANCER_DE:
+        texte_bouton = f"Joueur {current_player_index + 1} : Lancer le dé"
+        draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color)
+        if dice_roll > 0:
+            draw_button(screen, str(dice_roll), button_x, 150, button_width, button_height, active_color, inactive_color)
+    elif etat_jeu == ETAT_QUESTION:
+        la_question = "Qu'est ce que l'IA ? (test)" #requete en bdd en fonction de la valeur de la case actuelle avec toute ses suggestions
+        draw_button(screen, la_question, button_x, button_y, button_width, button_height, active_color, inactive_color)
+        draw_button(screen, "suggestion_1", button_x, 150, button_width, button_height, active_color, inactive_color)
+        draw_button(screen, "suggestion_2", button_x, 200, button_width, button_height, active_color, inactive_color)
+        draw_button(screen, "suggestion_3", button_x, 250, button_width, button_height, active_color, inactive_color)
+        draw_button(screen, "suggestion_4", button_x, 300, button_width, button_height, active_color, inactive_color)
+        #######
+        #
+        #
+        #
+        #
+        #definir reste code
+        # Passer au joueur suivant si il a repondu faux une fois toutes les étapes
+        # current_player_index = (current_player_index + 1) % nombre_de_joueurs
+        # etat_jeu = ETAT_LANCER_DE  # Réinitialiser l'état du jeu pour le prochain joueur
+
+
     #on dessine les différents groupe de sprites
     gamer_sprites.draw(screen)
     gamer_sprites.update()
