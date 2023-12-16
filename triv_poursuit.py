@@ -20,8 +20,7 @@ def draw_button(screen, text, x, y, width, height, active_color, inactive_color)
     text_rect.center = ((x + (width / 2)), (y + (height / 2)))
     screen.blit(text_surf, text_rect)
     
-    
-    
+
     
 # AFFICHAGE PYGAME
 
@@ -31,14 +30,7 @@ width, height = 1800, 1000  # Ajustez selon vos besoins
 screen = pygame.display.set_mode((width, height))
 
 
-#liste contenant les id de toutes les categories 
-cat_id = [1, 6, 4, 8, 9]
-
-np.random.seed(5)
-game_board = np.random.choice(cat_id, size=(15, 25))
-print(game_board)
-
-## === INTERFACE
+## === INTERFACE (coté droit, pour tout ce qui est interaction questions etc.)
 #dimensions de l'interface
 interface_width = 500  
 interface_height = height  # même hauteur que votre fenêtre de jeu
@@ -59,28 +51,35 @@ inactive_color = (10, 210, 255)
 current_player_index = 0  # Index du joueur actuel
 
 
-## === PLATEAU DE JEU 
-# une couleur pour chaque catégorie
+## === PLATEAU DE JEU (coté gauche, cependant, il est réellement defini dans la boucle de jeu car doit se mettre à jour)
+
+#liste contenant les id de toutes les categories 
+cat_id = [1, 6, 4, 8, 9] #requete en bdd pour récupérer toutes les catégories
+
+np.random.seed(5)#graine pour figer le random choice mais c pas obligé en soit
+game_board = np.random.choice(cat_id, size=(15, 25))
+#print(game_board)
+    
+# definition d'une couleur pour chaque catégorie
 #1 -> rose
 #2 -> vert
 #3 -> bleu
-#4 -> jaune(10, 210, 255)
+#4 -> jaune
 #5 -> purple
 colors = {cat_id[0]: (255, 105, 180), cat_id[1]: (119, 221, 119), cat_id[2]: (10, 210, 255), cat_id[3]: (255, 255, 102), cat_id[4]: (190, 35, 253)}
 
-# largeur du plateau de jeu en soustrayant la largeur de l'interface
+# definition de la largeur du plateau de jeu en soustrayant la largeur de l'interface
 game_board_width = width - interface_width
 
-# definition des cellules par rapport au playing board et des dimensions de l'écran 
+# definition des cellules par rapport au playing board et des dimensions de l'écran afin de pouvoir positionner les entités apres
 cell_width = game_board_width  // 25
 cell_height = height // 15
-
 
 
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
 gamer_sprites = pygame.sprite.Group()
-nombre_de_joueurs = 2 #requete bdd pour récup le nombre de player
+nombre_de_joueurs = 6 #requete bdd pour récup le nombre de player
 joueurs = []
 for num_joueur in range(1, nombre_de_joueurs + 1):
     nouveau_joueur = Gamer(0, 0, num_joueur)
@@ -108,7 +107,6 @@ fall_one = Element(0, 0, "fall")
 
 fall_sprites = pygame.sprite.Group()
 fall_sprites.add(fall_one)
-
 
 
 #requalibration de la position et de l'image du camembert (6 camemberts disposés dans le plateau)
