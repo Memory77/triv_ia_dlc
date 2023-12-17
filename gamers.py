@@ -4,12 +4,14 @@ import numpy as np
 
 
 class Gamer(pygame.sprite.Sprite):
-    def __init__(self, x, y, player_number):
+    def __init__(self, x, y, player_name):
         super().__init__()
         self.image = pygame.image.load('img/big_player_one.png')
         self.rect = self.image.get_rect(topleft=(x, y))
-        self.player_number = player_number
+        self.player_name = player_name
         self.camembert_part = []
+        self.score = 0
+        self.sound = ""
     
 
     def set_position(self, row, col, cell_width, cell_height):
@@ -18,28 +20,31 @@ class Gamer(pygame.sprite.Sprite):
         self.rect.y = row * cell_height
 
     def move(self, direction, cell_height, cell_width):
-            if direction == "up":
-                self.rect.y -= cell_height
-            elif direction == "down":
-                self.rect.y += cell_height
-            elif direction == "left":
-                self.rect.x -= cell_width
-            elif direction == "right":
-                self.rect.x += cell_width
-                
-    def set_image(self):
-        if self.player_number == 1:
+        if direction == "up":
+            self.rect.y -= cell_height
+        elif direction == "down":
+            self.rect.y += cell_height
+        elif direction == "left":
+            self.rect.x -= cell_width
+        elif direction == "right":
+            self.rect.x += cell_width
+            
+            
+    def set_image(self,personnage_name):
+        if personnage_name == 1:
             self.image = pygame.image.load('img/big_player_one.png')
-        elif self.player_number == 2:
+        elif personnage_name == 2:
             self.image = pygame.image.load('img/big_player_two.png')
-        elif self.player_number == 3:
+        elif personnage_name == 3:
             self.image = pygame.image.load('img/big_player_tree.png')
-        elif self.player_number == 4:
+        elif personnage_name == 4:
             self.image = pygame.image.load('img/big_player_four.png')
-        elif self.player_number == 5:
+        elif personnage_name == 5:
             self.image = pygame.image.load('img/big_player_five.png')
-        elif self.player_number == 6:
+        elif personnage_name == 6:
             self.image = pygame.image.load('img/big_player_six.png')
+        else:
+            self.image = pygame.image.load('img/big_player_tree.png')
             
             
     def collect_camembert(self, camembert_color):
@@ -47,7 +52,9 @@ class Gamer(pygame.sprite.Sprite):
             self.camembert_part.append(camembert_color)
         
         if len(self.camembert_part) == 5:
-            print(f'le joueur : {self.player_number} a gagné !')
+            print(f'{self.player_name} a gagné !')
+            #mettre le son du winner
+            #voir pour mettre à jour son profil avec un numero gagnant
             self.kill
             
     def check_for_camembert(player, camembert_sprites):
