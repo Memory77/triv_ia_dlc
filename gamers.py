@@ -4,10 +4,11 @@ import numpy as np
 
 
 class Gamer(pygame.sprite.Sprite):
-    def __init__(self, x, y, player_name):
+    def __init__(self, x, y, id, player_name):
         super().__init__()
         self.image = pygame.image.load('img/big_player_one.png')
         self.rect = self.image.get_rect(topleft=(x, y))
+        self.id = id
         self.player_name = player_name
         self.camembert_part = []
         self.score = 0

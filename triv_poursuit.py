@@ -2,11 +2,12 @@ import pygame
 import numpy as np
 from gamers import *
 import random
-import game
+#import game
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice():
-    return random.randint(1, game.dice())
+    #game.dice()
+    return random.randint(1, 6)
 
 def draw_button(screen, text, x, y, width, height, active_color, inactive_color):
     mouse = pygame.mouse.get_pos()
@@ -97,17 +98,18 @@ cell_height = height // 15
 
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
-# gamer_sprites = pygame.sprite.Group()
-# joueurs = []
-# for num_joueur in range(1, game.nb_gamers + 1):
-#     player_name = str(input(f'Pseudo joueur {num_joueur} : '))
-#     personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
-#     nouveau_joueur = Gamer(0, 0, player_name)
-#     joueurs.append(nouveau_joueur)
-#     gamer_sprites.add(nouveau_joueur)
-#     nouveau_joueur.set_position(7, 12, cell_width, cell_height)
-#     nouveau_joueur.set_image(personnage)
-    ## faire une insertion en bdd pour le crud le nom et son score ? 
+gamer_sprites = pygame.sprite.Group()
+nb_joueur = int(input('nombre de joueurs : '))
+joueurs = []
+for num_joueur in range(1, nb_joueur + 1):
+    player_name = str(input(f'Pseudo joueur {num_joueur} : '))
+    personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
+    nouveau_joueur = Gamer(0, 0, player_name)
+    joueurs.append(nouveau_joueur)
+    gamer_sprites.add(nouveau_joueur)
+    nouveau_joueur.set_position(7, 12, cell_width, cell_height)
+    nouveau_joueur.set_image(personnage)
+    #faire une insertion en bdd pour le crud le nom et son score ? 
     
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
@@ -214,7 +216,7 @@ while running:
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     dice_rolled = False
                     etat_jeu = ETAT_LANCER_DE #mettre en ETAT_QUESTION et commenter les trois prochaines lignes pour tester la suite(partie question)
-                    current_player_index = (current_player_index + 1) % game.nb_gamers
+                    current_player_index = (current_player_index + 1) % nb_joueur
                     print(f"Passage au joueur {current_player_index + 1}")
                     dice_roll = 0
 
@@ -225,6 +227,12 @@ while running:
     # pour afficher l'image de l'interface
     screen.blit(interface_image, (interface_x, interface_y))
     
+    button_x_ = 1150
+    for gamer in gamer_sprites:
+        button_x_ += 150
+        draw_button(screen,gamer.player_name, button_x_, 800, 150, button_height, active_color, inactive_color)
+        draw_button(screen,f"{gamer.score}", button_x_, 850, 150, button_height, active_color, inactive_color)
+
     # mise à jour le texte du bouton en fonction de l'état du jeu
     if etat_jeu == ETAT_LANCER_DE:
         texte_bouton = f"Joueur {current_player_index + 1} : Lancer le dé"
