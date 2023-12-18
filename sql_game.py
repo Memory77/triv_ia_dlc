@@ -64,9 +64,24 @@ def gamer_choice_added(gamers_id: list):
     try:
         action = int(action)
     except:
+        print("/!\ FATAL ERROR /!\ 001 : sql_game.py > choix ID joueur")
         sys.exit()
     
+    personnage = int(input('''Quel personnage veux-tu prendre ?
+1 : Deadpool
+2 : Captain America
+3 : orc
+4 : un perso dark
+5 : un deuxieme perso encore plus dark
+6 : un viking'''))
+
+    try:
+        action = int(action)
+    except:
+        print("/!\ FATAL ERROR /!\ 002 : sql_game.py > choix personnage")
+        sys.exit()
+
     conn.commit()
     conn.close()
 
-    return action, gamers[action]
+    return action, gamers[action], personnage
