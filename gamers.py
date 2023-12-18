@@ -30,18 +30,18 @@ class Gamer(pygame.sprite.Sprite):
             self.rect.x += cell_width
             
             
-    def set_image(self,personnage_name):
-        if personnage_name == 1:
+    def set_image(self,personnage):
+        if personnage == 1:
             self.image = pygame.image.load('img/big_player_one.png')
-        elif personnage_name == 2:
+        elif personnage == 2:
             self.image = pygame.image.load('img/big_player_two.png')
-        elif personnage_name == 3:
+        elif personnage == 3:
             self.image = pygame.image.load('img/big_player_tree.png')
-        elif personnage_name == 4:
+        elif personnage == 4:
             self.image = pygame.image.load('img/big_player_four.png')
-        elif personnage_name == 5:
+        elif personnage == 5:
             self.image = pygame.image.load('img/big_player_five.png')
-        elif personnage_name == 6:
+        elif personnage == 6:
             self.image = pygame.image.load('img/big_player_six.png')
         else:
             self.image = pygame.image.load('img/big_player_tree.png')

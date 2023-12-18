@@ -2,10 +2,11 @@ import pygame
 import numpy as np
 from gamers import *
 import random
+import game
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice():
-    return random.randint(1, 6)
+    return random.randint(1, game.dice())
 
 def draw_button(screen, text, x, y, width, height, active_color, inactive_color):
     mouse = pygame.mouse.get_pos()
@@ -97,16 +98,15 @@ cell_height = height // 15
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
 gamer_sprites = pygame.sprite.Group()
-nombre_de_joueurs = int(input("Nombre de joueurs : "))
 joueurs = []
-for num_joueur in range(1, nombre_de_joueurs + 1):
+for num_joueur in range(1, game.nb_gamers + 1):
     player_name = str(input(f'Pseudo joueur {num_joueur} : '))
-    personnage_name = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
+    personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
     nouveau_joueur = Gamer(0, 0, player_name)
     joueurs.append(nouveau_joueur)
     gamer_sprites.add(nouveau_joueur)
     nouveau_joueur.set_position(7, 12, cell_width, cell_height)
-    nouveau_joueur.set_image(personnage_name)
+    nouveau_joueur.set_image(personnage)
     ## faire une insertion en bdd pour le crud le nom et son score ? 
     
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
@@ -232,6 +232,9 @@ while running:
         if dice_roll > 0:
             draw_button(screen, str(dice_roll), button_x, 150, button_width, button_height, active_color, inactive_color)
     elif etat_jeu == ETAT_QUESTION:
+        
+
+
         la_question = "Qu'est ce que l'IA ? (test)" #requete en bdd en fonction de la valeur de la case actuelle avec toute ses suggestions
         #choisir les réponses avec l'event mouse ou le press key ? 
         draw_button(screen, la_question, button_x, button_y, button_width, button_height, active_color, inactive_color)
