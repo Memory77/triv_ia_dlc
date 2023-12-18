@@ -47,3 +47,6 @@ game = NewGame(nb_gamers, board_game_width, board_game_height)
 
 def dice() -> int:
     return dice
+
+def game():
+    return game

@@ -27,3 +27,6 @@ class NewGame:
                 if board_game[y][x] == "":
                     x_y = False
             self.gamers.append(gamers.Gamer(x, y, i))
+    
+    def nb_gamers(self) -> int:
+        return len(self.gamers)
