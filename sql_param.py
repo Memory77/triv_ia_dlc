@@ -61,6 +61,9 @@ CREATE TABLE IF NOT EXISTS game_gamer (
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS categorie (
 	name TEXT NOT NULL,
+    R INTEGER NOT NULL,
+    G INTEGER NOT NULL,
+    B INTEGER NOT NULL,
 	CONSTRAINT categorie_PK PRIMARY KEY (name)
 );''')
     query_execute(cur, f'''CREATE UNIQUE INDEX IF NOT EXISTS categorie_name_IDX ON categorie (name);''')
