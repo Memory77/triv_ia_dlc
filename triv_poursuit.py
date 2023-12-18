@@ -97,16 +97,16 @@ cell_height = height // 15
 
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
-gamer_sprites = pygame.sprite.Group()
-joueurs = []
-for num_joueur in range(1, game.nb_gamers + 1):
-    player_name = str(input(f'Pseudo joueur {num_joueur} : '))
-    personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
-    nouveau_joueur = Gamer(0, 0, player_name)
-    joueurs.append(nouveau_joueur)
-    gamer_sprites.add(nouveau_joueur)
-    nouveau_joueur.set_position(7, 12, cell_width, cell_height)
-    nouveau_joueur.set_image(personnage)
+# gamer_sprites = pygame.sprite.Group()
+# joueurs = []
+# for num_joueur in range(1, game.nb_gamers + 1):
+#     player_name = str(input(f'Pseudo joueur {num_joueur} : '))
+#     personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
+#     nouveau_joueur = Gamer(0, 0, player_name)
+#     joueurs.append(nouveau_joueur)
+#     gamer_sprites.add(nouveau_joueur)
+#     nouveau_joueur.set_position(7, 12, cell_width, cell_height)
+#     nouveau_joueur.set_image(personnage)
     ## faire une insertion en bdd pour le crud le nom et son score ? 
     
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
@@ -214,7 +214,7 @@ while running:
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     dice_rolled = False
                     etat_jeu = ETAT_LANCER_DE #mettre en ETAT_QUESTION et commenter les trois prochaines lignes pour tester la suite(partie question)
-                    current_player_index = (current_player_index + 1) % nombre_de_joueurs
+                    current_player_index = (current_player_index + 1) % game.nb_gamers
                     print(f"Passage au joueur {current_player_index + 1}")
                     dice_roll = 0
 
