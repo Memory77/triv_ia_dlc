@@ -57,14 +57,6 @@ CREATE TABLE IF NOT EXISTS game_gamer (
 	CONSTRAINT game_gamer_FK_1 FOREIGN KEY (gamer_id) REFERENCES gamer(id)
 );''')
     
-    # CREATE TABLE "param"
-    query_execute(cur, f'''
-CREATE TABLE IF NOT EXISTS param (
-	small_dice INTEGER NOT NULL,
-	big_dice INTEGER NOT NULL,
-	max_player INTEGER NOT NULL
-);''')
-    
     # CREATE TABLE "categorie"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS categorie (
@@ -73,9 +65,9 @@ CREATE TABLE IF NOT EXISTS categorie (
 );''')
     query_execute(cur, f'''CREATE UNIQUE INDEX IF NOT EXISTS categorie_name_IDX ON categorie (name);''')
     
-    # CREATE TABLE "answer"
+    # CREATE TABLE "question_answer"
     query_execute(cur, f'''
-CREATE TABLE IF NOT EXISTS answer (
+CREATE TABLE IF NOT EXISTS question_answer (
 	categorie_name TEXT NOT NULL,
 	question TEXT NOT NULL,
 	answer TEXT NOT NULL,
@@ -84,12 +76,22 @@ CREATE TABLE IF NOT EXISTS answer (
 	CONSTRAINT answer_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
 );''')
     
+    # CREATE TABLE "param"
+    query_execute(cur, f'''
+CREATE TABLE IF NOT EXISTS param (
+	small_dice INTEGER NOT NULL,
+	big_dice INTEGER NOT NULL,
+	max_player INTEGER NOT NULL,
+    board_game_width INTEGER NOT NULL,
+    board_game_height INTEGER NOT NULL
+);''')
+    
     #paramètre par défaut du jeu 
     query_execute(cur, f'''
     DELETE FROM param 
     ''')
     query_execute(cur, f'''
-    INSERT INTO param VALUES (4, 10, 8)
+    INSERT INTO param VALUES (4, 10, 8, 25, 15)
     ''')
     
     # Fermeture de la connexion
