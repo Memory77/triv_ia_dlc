@@ -29,8 +29,18 @@ def query_error(query: str):
 
 
 def all_gamers(cur) -> str:
-    res = query_execute(cur, f'SELECT * FROM gamer', 'SELECT_ALL')
-    return res
+    return query_execute(cur, f'SELECT * FROM gamer', 'SELECT_ALL')
+
+
+def categories():
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    return query_execute(cur, f'SELECT * FROM categorie', 'SELECT_ALL')
+
+    conn.close()
+
+    return action, gamers[action]
 
 
 ##################################################
@@ -56,8 +66,7 @@ def gamer_choice_added(gamers_id: list):
     except:
         sys.exit()
     
-    return action, gamers[action]
-
-
     conn.commit()
     conn.close()
+
+    return action, gamers[action]
