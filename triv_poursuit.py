@@ -2,12 +2,11 @@ import pygame
 import numpy as np
 from gamers import *
 import random
-#import game
+import main
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice():
-    #game.dice()
-    return random.randint(1, 6)
+    return random.randint(1, main.dice())
 
 def draw_button(screen, text, x, y, width, height, active_color, inactive_color):
     mouse = pygame.mouse.get_pos()
@@ -98,19 +97,22 @@ cell_height = height // 15
 
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
+game = main.new_game()
 gamer_sprites = pygame.sprite.Group()
-nb_joueur = int(input('nombre de joueurs : '))
 joueurs = []
-for num_joueur in range(1, nb_joueur + 1):
-    player_name = str(input(f'Pseudo joueur {num_joueur} : '))
-    personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
-    nouveau_joueur = Gamer(0, 0, player_name)
-    joueurs.append(nouveau_joueur)
-    gamer_sprites.add(nouveau_joueur)
-    nouveau_joueur.set_position(7, 12, cell_width, cell_height)
-    nouveau_joueur.set_image(personnage)
-    #faire une insertion en bdd pour le crud le nom et son score ? 
-    
+game_gamers_sprite = game.gamers_sprite()
+for gamer in game_gamers_sprite:
+    # player_name = str(input(f'Pseudo joueur {num_joueur} : '))
+    # personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
+    # nouveau_joueur = Gamer(0, 0, player_name)
+    # joueurs.append(nouveau_joueur)
+    # gamer_sprites.add(nouveau_joueur)
+    # nouveau_joueur.set_position(7, 12, cell_width, cell_height)
+    # nouveau_joueur.set_image(personnage)
+    joueurs.append(gamer)
+    gamer_sprites.add(gamer)
+    gamer.set_position(gamer.y, gamer.x, cell_width, cell_height)
+
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
 #creation des camemberts
@@ -216,7 +218,7 @@ while running:
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     dice_rolled = False
                     etat_jeu = ETAT_LANCER_DE #mettre en ETAT_QUESTION et commenter les trois prochaines lignes pour tester la suite(partie question)
-                    current_player_index = (current_player_index + 1) % nb_joueur
+                    current_player_index = (current_player_index + 1) % main.nb_gamers
                     print(f"Passage au joueur {current_player_index + 1}")
                     dice_roll = 0
 
