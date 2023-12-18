@@ -4,7 +4,7 @@ import numpy as np
 
 
 class Gamer(pygame.sprite.Sprite):
-    def __init__(self, x, y, id, player_name):
+    def __init__(self, x, y, id, player_name, personnage):
         super().__init__()
         self.image = pygame.image.load('img/big_player_one.png')
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -13,6 +13,7 @@ class Gamer(pygame.sprite.Sprite):
         self.camembert_part = []
         self.score = 0
         self.sound = ""
+        self.personnage = personnage
     
 
     def set_position(self, row, col, cell_width, cell_height):

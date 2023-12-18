@@ -29,10 +29,10 @@ class NewGame:
                 if board_game[y][x] == "":
                     x_y = False
 
-            id, alias = sql_game.gamer_choice_added(gamers_id)
+            id, alias, personnage = sql_game.gamer_choice_added(gamers_id)
             gamers_id.append(id)
 
-            self.gamers.append(gamers.Gamer(x, y, id, alias))
+            self.gamers.append(gamers.Gamer(x, y, id, alias, personnage))
     
     def nb_gamers(self) -> int:
         return len(self.gamers)
