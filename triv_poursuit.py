@@ -112,7 +112,7 @@ for gamer in game_gamers_sprite:
     joueurs.append(gamer)
     gamer_sprites.add(gamer)
     gamer.set_position(gamer.y, gamer.x, cell_width, cell_height)
-
+    gamer.set_image(gamer.personnage)
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
 #creation des camemberts
