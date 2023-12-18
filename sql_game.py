@@ -36,11 +36,11 @@ def categories():
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
     
-    return query_execute(cur, f'SELECT * FROM categorie', 'SELECT_ALL')
+    res = query_execute(cur, f'SELECT * FROM categorie', 'SELECT_ALL')
 
     conn.close()
 
-    return action, gamers[action]
+    return res
 
 
 ##################################################
