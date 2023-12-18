@@ -30,3 +30,7 @@ class NewGame:
     
     def nb_gamers(self) -> int:
         return len(self.gamers)
+    
+    def gamers_sprite(self):
+        for gamer in self.gamers:
+            yield gamer
