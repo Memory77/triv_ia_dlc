@@ -3,6 +3,7 @@ import numpy as np
 from gamers import *
 import random
 import main
+import sql_game
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice(dice: int):
@@ -55,8 +56,11 @@ inactive_color = (10, 210, 255)
 ## === PLATEAU DE JEU (coté gauche, cependant, il est réellement defini dans la boucle de jeu car doit se mettre à jour)
 
 #liste contenant les id de toutes les categories 
-cat_id = [1, 6, 4, 8, 9] #requete en bdd pour récupérer toutes les catégories
-
+cat_id = []
+colors = {}
+for categorie in sql_game.categories():
+    cat_id.append(categorie[0])
+    colors[categorie[0]] = (categorie[1], categorie[2], categorie[3])
 
 np.random.seed(5)#graine pour figer le random choice mais c pas obligé en soit
 game_board = np.random.choice(cat_id, size=(15, 25))
@@ -85,8 +89,6 @@ game_board = np.random.choice(cat_id, size=(15, 25))
 #4 -> jaune
 #5 -> purple
 #false -> noir
-colors = {cat_id[0]: (255, 105, 180), cat_id[1]: (119, 221, 119), cat_id[2]: (10, 210, 255), 
-          cat_id[3]: (255, 255, 102), cat_id[4]: (190, 35, 253), False: (18, 12, 58)}
 
 # definition de la largeur du plateau de jeu en soustrayant la largeur de l'interface
 game_board_width = width - interface_width
