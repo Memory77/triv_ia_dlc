@@ -9,8 +9,10 @@ import sys
 import sql_game
 
 class NewGame:
-    def __init__(self, nb_gamers: int, board_game_width: int, board_game_height: int):
+    def __init__(self, nb_gamers: int, dice: int, board_game_width: int, board_game_height: int):
         
+        self.dice = dice
+
         board_game = [["" for y in range(board_game_width)] for x in range(board_game_height)]
         
         self.gamers = []

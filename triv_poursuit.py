@@ -5,9 +5,8 @@ import random
 import main
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
-def roll_dice():
-    print('fff',main.dice(), type(main.dice()))
-    return random.randint(1, main.dice())
+def roll_dice(dice: int):
+    return random.randint(1, dice)
 
 def draw_button(screen, text, x, y, width, height, active_color, inactive_color, font_size):
     mouse = pygame.mouse.get_pos()
@@ -194,7 +193,7 @@ while running:
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if button_x + button_width > event.pos[0] > button_x and button_y + button_height > event.pos[1] > button_y:
-                dice_roll = roll_dice()
+                dice_roll = roll_dice(game.dice)
                 dice_rolled = True
                 player_moves = dice_roll
                 print(f"Joueur {current_player_index + 1} a lancé le dé: {dice_roll}")

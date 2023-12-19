@@ -43,10 +43,7 @@ if dice < small_dice or dice > big_dice:
     sys.exit()
 
 
-game = NewGame(nb_gamers, board_game_width, board_game_height)
-
-def dice() -> int:
-    return dice
+game = NewGame(nb_gamers, dice, board_game_width, board_game_height)
 
 def new_game():
     return game
