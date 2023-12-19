@@ -57,6 +57,7 @@ inactive_color = (10, 210, 255)
 #liste contenant les id de toutes les categories 
 cat_id = [1, 6, 4, 8, 9] #requete en bdd pour récupérer toutes les catégories
 
+
 np.random.seed(5)#graine pour figer le random choice mais c pas obligé en soit
 game_board = np.random.choice(cat_id, size=(15, 25))
 
