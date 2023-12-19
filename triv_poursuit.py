@@ -2,20 +2,21 @@ import pygame
 import numpy as np
 from gamers import *
 import random
-import game
+import main
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice():
-    return random.randint(1, game.dice())
+    print('fff',main.dice(), type(main.dice()))
+    return random.randint(1, main.dice())
 
-def draw_button(screen, text, x, y, width, height, active_color, inactive_color):
+def draw_button(screen, text, x, y, width, height, active_color, inactive_color, font_size):
     mouse = pygame.mouse.get_pos()
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
         pygame.draw.rect(screen, active_color, (x, y, width, height))
     else:
         pygame.draw.rect(screen, inactive_color, (x, y, width, height))
     
-    font = pygame.font.SysFont(None, 40)
+    font = pygame.font.SysFont(None, font_size)
     text_surf = font.render(text, True, (0, 0, 0))
     text_rect = text_surf.get_rect()
     text_rect.center = ((x + (width / 2)), (y + (height / 2)))
@@ -97,18 +98,22 @@ cell_height = height // 15
 
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
-# gamer_sprites = pygame.sprite.Group()
-# joueurs = []
-# for num_joueur in range(1, game.nb_gamers + 1):
-#     player_name = str(input(f'Pseudo joueur {num_joueur} : '))
-#     personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
-#     nouveau_joueur = Gamer(0, 0, player_name)
-#     joueurs.append(nouveau_joueur)
-#     gamer_sprites.add(nouveau_joueur)
-#     nouveau_joueur.set_position(7, 12, cell_width, cell_height)
-#     nouveau_joueur.set_image(personnage)
-    ## faire une insertion en bdd pour le crud le nom et son score ? 
-    
+game = main.new_game()
+gamer_sprites = pygame.sprite.Group()
+joueurs = []
+game_gamers_sprite = game.gamers_sprite()
+for gamer in game_gamers_sprite:
+    # player_name = str(input(f'Pseudo joueur {num_joueur} : '))
+    # personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
+    # nouveau_joueur = Gamer(0, 0, player_name)
+    # joueurs.append(nouveau_joueur)
+    # gamer_sprites.add(nouveau_joueur)
+    # nouveau_joueur.set_position(7, 12, cell_width, cell_height)
+    # nouveau_joueur.set_image(personnage)
+    joueurs.append(gamer)
+    gamer_sprites.add(gamer)
+    gamer.set_position(gamer.y, gamer.x, cell_width, cell_height)
+    gamer.set_image(gamer.personnage)
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
 #creation des camemberts
@@ -213,8 +218,8 @@ while running:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     dice_rolled = False
-                    etat_jeu = ETAT_LANCER_DE #mettre en ETAT_QUESTION et commenter les trois prochaines lignes pour tester la suite(partie question)
-                    current_player_index = (current_player_index + 1) % game.nb_gamers
+                    etat_jeu = ETAT_LANCER_DE 
+                    current_player_index = (current_player_index + 1) % main.nb_gamers
                     print(f"Passage au joueur {current_player_index + 1}")
                     dice_roll = 0
 
@@ -225,10 +230,33 @@ while running:
     # pour afficher l'image de l'interface
     screen.blit(interface_image, (interface_x, interface_y))
     
+    ### === mise à jour des scores
+    button_start_x = 1300  
+    button_start_y = 800   
+    button_x_ = button_start_x
+    button_y_ = button_start_y
+
+    max_buttons_per_row = 4  #nombre maximal de boutons par ligne
+    button_count = 0  # cpt de boutons pour contrôler la création de nouvelles lignes
+
+    for gamer in gamer_sprites:
+        draw_button(screen, gamer.player_name, button_x_, button_y_, 150, button_height, active_color, inactive_color,25)
+        draw_button(screen, f"{gamer.score}", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
+
+        # mise à jour des positions des boutons pour le prochain joueur
+        button_x_ += 120
+        button_count += 1
+
+        # Passer à la ligne suivante si le nombre maximal de boutons est atteint
+        if button_count >= max_buttons_per_row:
+            button_x_ = button_start_x
+            button_y_ += 100  # Augmenter de 100 pour la prochaine ligne
+            button_count = 0
+    
     # mise à jour le texte du bouton en fonction de l'état du jeu
     if etat_jeu == ETAT_LANCER_DE:
         texte_bouton = f"Joueur {current_player_index + 1} : Lancer le dé"
-        draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color)
+        draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         if dice_roll > 0:
             draw_button(screen, str(dice_roll), button_x, 150, button_width, button_height, active_color, inactive_color)
     elif etat_jeu == ETAT_QUESTION:

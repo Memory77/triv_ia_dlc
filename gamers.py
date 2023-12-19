@@ -10,6 +10,8 @@ class Gamer(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(x, y))
         self.id = id
         self.player_name = player_name
+        self.x = x
+        self.y = y
         self.camembert_part = []
         self.score = 0
         self.sound = ""
