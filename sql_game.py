@@ -73,7 +73,8 @@ def gamer_choice_added(gamers_id: list):
 3 : orc
 4 : un perso dark
 5 : un deuxieme perso encore plus dark
-6 : un viking'''))
+6 : un viking
+'''))
 
     try:
         action = int(action)
