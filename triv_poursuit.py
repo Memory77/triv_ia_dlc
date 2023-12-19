@@ -138,23 +138,23 @@ fall_sprites.add(fall_one)
 
 
 #requalibration de la position et de l'image du camembert (6 camemberts disposés dans le plateau)
-camembert_red.set_position(5, 1, cell_width, cell_height)
+camembert_red.set_position(0, 24, cell_width, cell_height)
 camembert_red.set_image()
 
-camembert_green.set_position(6, 8, cell_width, cell_height)
+camembert_green.set_position(14, 24, cell_width, cell_height)
 camembert_green.set_image()
 
-camembert_blue.set_position(12, 4, cell_width, cell_height)
+camembert_blue.set_position(5, 13, cell_width, cell_height)
 camembert_blue.set_image()
 
-camembert_yellow.set_position(2, 9, cell_width, cell_height)
+camembert_yellow.set_position(0, 0, cell_width, cell_height)
 camembert_yellow.set_image()
 
-camembert_purple.set_position(4, 20, cell_width, cell_height)
+camembert_purple.set_position(14, 0, cell_width, cell_height)
 camembert_purple.set_image()
 
 #idem pour le trou
-fall_one.set_position(5, 12, cell_width, cell_height)
+fall_one.set_position(10, 13, cell_width, cell_height)
 fall_one.set_image()
 
 
@@ -258,18 +258,18 @@ while running:
         texte_bouton = f"Joueur {current_player_index + 1} : Lancer le dé"
         draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         if dice_roll > 0:
-            draw_button(screen, str(dice_roll), button_x, 150, button_width, button_height, active_color, inactive_color)
+            draw_button(screen, str(dice_roll), button_x, 150, button_width, button_height, active_color, inactive_color, 40)
     elif etat_jeu == ETAT_QUESTION:
         
 
 
         la_question = "Qu'est ce que l'IA ? (test)" #requete en bdd en fonction de la valeur de la case actuelle avec toute ses suggestions
         #choisir les réponses avec l'event mouse ou le press key ? 
-        draw_button(screen, la_question, button_x, button_y, button_width, button_height, active_color, inactive_color)
-        draw_button(screen, "suggestion_1", button_x, 150, button_width, button_height, active_color, inactive_color)
-        draw_button(screen, "suggestion_2", button_x, 200, button_width, button_height, active_color, inactive_color)
-        draw_button(screen, "suggestion_3", button_x, 250, button_width, button_height, active_color, inactive_color)
-        draw_button(screen, "suggestion_4", button_x, 300, button_width, button_height, active_color, inactive_color)
+        draw_button(screen, la_question, button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
+        draw_button(screen, "suggestion_1", button_x, 150, button_width, button_height, active_color, inactive_color, 40)
+        draw_button(screen, "suggestion_2", button_x, 200, button_width, button_height, active_color, inactive_color, 40)
+        draw_button(screen, "suggestion_3", button_x, 250, button_width, button_height, active_color, inactive_color, 40)
+        draw_button(screen, "suggestion_4", button_x, 300, button_width, button_height, active_color, inactive_color, 40)
         #######
         #
         #
