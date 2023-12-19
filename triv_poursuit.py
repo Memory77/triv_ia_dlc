@@ -90,17 +90,19 @@ game_board = np.random.choice(cat_id, size=(15, 25))
 #5 -> purple
 #false -> noir
 
+# import du nouveau jeu
+game = main.new_game()
+
 # definition de la largeur du plateau de jeu en soustrayant la largeur de l'interface
 game_board_width = width - interface_width
 
 # definition des cellules par rapport au playing board et des dimensions de l'écran afin de pouvoir positionner les entités apres
-cell_width = game_board_width  // 25
-cell_height = height // 15
+cell_width = game_board_width  // game.board_game_width
+cell_height = height // game.board_game_height
 
 
 #=== INITIALISATION DES JOUEURS ET DES ELEMENTS 
 # creation des joueurs 
-game = main.new_game()
 gamer_sprites = pygame.sprite.Group()
 joueurs = []
 game_gamers_sprite = game.gamers_sprite()
@@ -174,18 +176,18 @@ while running:
     
     
     #definition visuel du plateau (qui est remis à jour a chaque tour dans la boucle)
-    for i in range(15):
-        for j in range(25):
+    for i in range(game.board_game_height):
+        for j in range(game.board_game_width):
             rect = pygame.Rect(j * cell_width, i * cell_height, cell_width, cell_height)
             pygame.draw.rect(screen, colors[game_board[i][j]], rect)
 
     # definition des lignes du playing_board
     line_color = (255, 255, 255)
     # Dessiner les lignes verticales
-    for j in range(25):  
+    for j in range(game.board_game_width):  
         pygame.draw.line(screen, line_color, (j * cell_width, 0), (j * cell_width, height))
     # Dessiner les lignes horizontales
-    for i in range(15): 
+    for i in range(game.board_game_height): 
         pygame.draw.line(screen, line_color, (0, i * cell_height), (game_board_width, i * cell_height))
 
 
@@ -204,16 +206,16 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if dice_rolled and player_moves > 0:
                 if event.key == pygame.K_LEFT:
-                    joueurs[current_player_index].move("left", cell_height, cell_width)
+                    joueurs[current_player_index].move("left", cell_height, cell_width, game)
                     player_moves -= 1
                 elif event.key == pygame.K_RIGHT:
-                    joueurs[current_player_index].move("right", cell_height, cell_width)
+                    joueurs[current_player_index].move("right", cell_height, cell_width, game)
                     player_moves -= 1
                 elif event.key == pygame.K_UP:
-                    joueurs[current_player_index].move("up", cell_height, cell_width)
+                    joueurs[current_player_index].move("up", cell_height, cell_width, game)
                     player_moves -= 1
                 elif event.key == pygame.K_DOWN:
-                    joueurs[current_player_index].move("down", cell_height, cell_width)
+                    joueurs[current_player_index].move("down", cell_height, cell_width, game)
                     player_moves -= 1
 
             if player_moves == 0 and dice_rolled:

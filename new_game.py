@@ -14,6 +14,8 @@ class NewGame:
         self.dice = dice
 
         board_game = [["" for y in range(board_game_width)] for x in range(board_game_height)]
+        self.board_game_width = board_game_width
+        self.board_game_height = board_game_height
         
         self.gamers = []
         gamers_id = []# pour ne pas ajouter plusieurs fois le même joueur

@@ -23,15 +23,23 @@ class Gamer(pygame.sprite.Sprite):
         self.rect.x = col * cell_width
         self.rect.y = row * cell_height
 
-    def move(self, direction, cell_height, cell_width):
+    def move(self, direction, cell_height, cell_width, game):
         if direction == "up":
             self.rect.y -= cell_height
+            if self.rect.y < 0:
+                self.rect.y = (game.board_game_height - 1) * cell_height
         elif direction == "down":
             self.rect.y += cell_height
+            if self.rect.y > (game.board_game_height - 1) * cell_height:
+                self.rect.y = 0
         elif direction == "left":
             self.rect.x -= cell_width
+            if self.rect.x < 0:
+                self.rect.x = (game.board_game_width - 1) * cell_width
         elif direction == "right":
             self.rect.x += cell_width
+            if self.rect.x > (game.board_game_width - 1) * cell_width:
+                self.rect.x = 0
             
             
     def set_image(self,personnage):
