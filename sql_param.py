@@ -63,24 +63,15 @@ CREATE TABLE IF NOT EXISTS categorie (
 );''')
     query_execute(cur, f'''CREATE UNIQUE INDEX IF NOT EXISTS categorie_name_IDX ON categorie (name);''')
 
-    # CREATE TABLE "question"
-    query_execute(cur, f'''
-CREATE TABLE IF NOT EXISTS question (
-	categorie_name TEXT NOT NULL,
-	question TEXT NOT NULL,
-	CONSTRAINT question_PK PRIMARY KEY (categorie_name,question),
-	CONSTRAINT question_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
-);''')
-    
     # CREATE TABLE "answer"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS answer (
 	categorie_name TEXT NOT NULL,
-	question_question TEXT NOT NULL,
+	question TEXT NOT NULL,
 	answer TEXT NOT NULL,
-	good_answer INTEGER NOT NULL,
-	CONSTRAINT answer_PK PRIMARY KEY (categorie_name,question_question,answer),
-	CONSTRAINT answer_FK FOREIGN KEY (categorie_name,question_question) REFERENCES question(categorie_name,question)
+	good_answer BOOL NOT NULL,
+	CONSTRAINT answer_PK PRIMARY KEY (categorie_name,question,answer),
+	CONSTRAINT answer_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
 );''')
     
     #paramètre par défaut du jeu 
@@ -94,3 +85,4 @@ CREATE TABLE IF NOT EXISTS answer (
     # Fermeture de la connexion
     conn.commit()
     conn.close()
+
