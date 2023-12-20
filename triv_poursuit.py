@@ -197,7 +197,7 @@ while running:
             running = False
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if button_x + button_width > event.pos[0] > button_x and button_y + button_height > event.pos[1] > button_y:
+            if dice_rolled == False and button_x + button_width > event.pos[0] > button_x and button_y + button_height > event.pos[1] > button_y:
                 dice_roll = roll_dice(game.dice)
                 dice_rolled = True
                 player_moves = dice_roll

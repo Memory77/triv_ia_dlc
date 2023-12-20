@@ -1,6 +1,4 @@
 import pygame
-import numpy as np
-
 
 
 class Gamer(pygame.sprite.Sprite):
