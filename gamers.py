@@ -114,22 +114,20 @@ class Gamer(pygame.sprite.Sprite):
                 return True
         return False
     
-    def take_camembert(self, camembert_sprites, game, cell_width, cell_height):
+    def take_camembert(self, camembert_sprites, cell_width, cell_height, game):
         for camembert in camembert_sprites:
             if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
                 self.score += game.camembert_question_points
                 camembert.kill()
                 self.camembert_part.append(camembert.color)
-                sound = pygame.mixer.Sound('sounds/take_camembert.wav')
+                sound = pygame.mixer.Sound('sounds/good_answer.wav')
                 sound.play()
 
                 #generation d'un nouveau camembert aléatoirement 
                 number_min = 0
                 number_rows = game.board_game_height - 1
+                number_cols = game.board_game_width - 1
                 y = random.randint(number_min, number_rows)
-
-                number_min = 0
-                number_cols = game.board_game_height - 1
                 x = random.randint(number_min, number_cols)
                 
                 new_camembert = Element(0, 0, "camembert", camembert.color)
@@ -137,15 +135,42 @@ class Gamer(pygame.sprite.Sprite):
                 new_camembert.set_image()
                 camembert_sprites.add(new_camembert)
                 
-                print(game.board_game_height)
-                print(game.board_game_width)
-                print(camembert_sprites)
-                print(self.camembert_part)
+                # print(game.board_game_height)
+                # print(game.board_game_width)
+                # print(camembert_sprites)
+                # print(self.camembert_part)
     
-    
-    
-
-
+    def check_fall(self, fall_sprites, gamers_sprite, cell_width, cell_height, game):
+        for fall in fall_sprites:
+            for gamer in gamers_sprite:
+                if self.rect.colliderect(fall.rect):
+                    #set position aléatoirement 
+                    number_min = 0
+                    number_rows = game.board_game_height - 1
+                    number_cols = game.board_game_width - 1
+                    y = random.randint(number_min, number_rows)
+                    x = random.randint(number_min, number_cols)
+            
+                    self.set_position(y, x, cell_width, cell_height)
+                    self.score += game.hole_points
+                    sound = pygame.mixer.Sound('sounds/fall.wav')
+                    sound.play()
+                    print(y)
+                    print(x)
+                if gamer.rect.colliderect(fall.rect):
+                    #set position aléatoirement 
+                    number_min = 0
+                    number_rows = game.board_game_height - 1
+                    number_cols = game.board_game_width - 1
+                    y = random.randint(number_min, number_rows)
+                    x = random.randint(number_min, number_cols)
+            
+                    gamer.set_position(y, x, cell_width, cell_height)
+                    gamer.score += game.hole_points
+                    sound = pygame.mixer.Sound('sounds/fall.wav')
+                    sound.play()
+                    print(y)
+                    print(y)
 
 
 class Element(pygame.sprite.Sprite):
