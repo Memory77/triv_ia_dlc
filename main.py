@@ -13,6 +13,11 @@ big_dice = params[1]
 max_player = params[2]
 board_game_width = params[3]
 board_game_height = params[4]
+simple_question_points = params[5]
+camembert_question_points = params[6]
+hole_points = params[7]
+time_points = params[8]
+time_answer_out = params[9]
 
 os.system('clear')
 
@@ -48,7 +53,7 @@ else:
     nb_gamers = 2
     dice = 20
 
-game = NewGame(nb_gamers, dice, board_game_width, board_game_height)
+game = NewGame(nb_gamers, dice, board_game_width, board_game_height, simple_question_points, camembert_question_points, hole_points, time_points, time_answer_out)
 
 def new_game():
     return game

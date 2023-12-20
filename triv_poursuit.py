@@ -277,17 +277,16 @@ while running:
         
         ##id categorie de la position du gamer 
         case_categorie_id = game_board[joueurs[current_player_index].y][joueurs[current_player_index].x]
-        
 
         # catégorie et question
         question_button_y = 200
-        draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, active_color, inactive_color, 50) # catégorie
+        draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, inactive_color, inactive_color, 50) # catégorie
         question_button_y += 50
         if question == "":
             question = sql_game.question(case_categorie_id)
             question_wrapped = auto_wrap(question, 30)
         for line in question_wrapped:
-            draw_button(screen, line, button_x, question_button_y, button_width, 20, active_color, inactive_color, 35) # question
+            draw_button(screen, line, button_x, question_button_y, button_width, 20, inactive_color, inactive_color, 35) # question
             question_button_y += 20
         
         # réponses
@@ -316,7 +315,7 @@ while running:
             if reponse is not None:
                 if reponse == True: 
                     joueurs[current_player_index].take_camembert(camembert_sprites, game, cell_width, cell_height)
-                    joueurs[current_player_index].score += 500
+                    joueurs[current_player_index].score += game.simple_question_points
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
                 dice_roll = 0
