@@ -67,11 +67,10 @@ def answers(categorie: str, question: str):
     cur = conn.cursor()
 
     res = query_execute(cur, f'''
-                        SELECT answer
+                        SELECT answer, good_answer
                         FROM question_answer
                         WHERE categorie_name = "{categorie}"
-                        AND question = "{question}"
-                        ORDER BY random()''', 'SELECT_ALL')
+                        AND question = "{question}"''', 'SELECT_ALL')
     conn.close()
 
     return res
