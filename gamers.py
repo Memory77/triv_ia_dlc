@@ -152,16 +152,18 @@ class Element(pygame.sprite.Sprite):
             self.image = pygame.image.load('img/trou-noir.png')
 
         elif self.name_element == "camembert":
-            if self.color == "red":
-                self.image = pygame.image.load('img/camembert_red.png')
+            if self.color == "pink":
+                self.image = pygame.image.load('img/pink.png')
             elif self.color == "blue":
-                self.image = pygame.image.load('img/camembert_blue.png')
+                self.image = pygame.image.load('img/blue.png')
             elif self.color == "green":
-                self.image = pygame.image.load('img/camembert_green.png')
+                self.image = pygame.image.load('img/green.png')
             elif self.color == "yellow":
-                self.image = pygame.image.load('img/camembert_yellow.png')
+                self.image = pygame.image.load('img/yellow.png')
             elif self.color == "purple":
-                self.image = pygame.image.load('img/camembert_purple.png')
+                self.image = pygame.image.load('img/purple.png')
+            elif self.color == "orange":
+                self.image = pygame.image.load('img/orange.png')
 
     # def check_fall(self, fall_sprites):
     #     for fall in fall_sprites:
