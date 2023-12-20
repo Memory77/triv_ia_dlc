@@ -65,4 +65,9 @@ class NewGame:
     
 
     def victory(self) -> bool:
+        for gamer in self.gamers:
+            if gamer.score >= self.end_game_max_points:
+                return True
+            if len(gamer.camembert_part) >= self.end_game_max_camembert:
+                return True
         return False

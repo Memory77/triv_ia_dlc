@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS param (
     
     #paramètre par défaut du jeu 
     query_execute(cur, f'''
-    DELETE FROM param 
+    DELETE FROM param
     ''')
     query_execute(cur, f'''
     INSERT INTO param VALUES (4, 10, 8, 25, 15, 100, 150, -250, 10, 30, 5000, 6)
