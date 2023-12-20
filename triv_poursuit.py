@@ -4,6 +4,7 @@ from gamers import *
 import random
 import main
 import sql_game
+import time
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice(dice: int):
@@ -160,6 +161,7 @@ fall_one.set_image()
 
 
 # États de jeu
+score = 0
 ETAT_LANCER_DE = 1
 ETAT_QUESTION = 2
 etat_jeu = ETAT_LANCER_DE
@@ -271,7 +273,7 @@ while running:
             draw_button(screen, f"{player_moves}", 1450, 200, 200, button_height, active_color, inactive_color, 40)
             
             
-    elif etat_jeu == ETAT_QUESTION:
+    elif etat_jeu == ETAT_QUESTION:  # le joueur a épuisé son temps 
         
         draw_button(screen, f"{joueurs[current_player_index].player_name}", button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         
@@ -284,6 +286,7 @@ while running:
         draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, active_color, inactive_color, 50) # catégorie
         question_button_y += 50
         if question == "":
+            temps_debut = time.time()
             question = sql_game.question(case_categorie_id)
             question_wrapped = auto_wrap(question, 30)
         for line in question_wrapped:
@@ -341,3 +344,5 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
+
+
