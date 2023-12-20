@@ -107,8 +107,7 @@ class Gamer(pygame.sprite.Sprite):
         sound = pygame.mixer.Sound(f"sounds/{random_sound}")
         sound.play()
         
-        ###à definir methodes camembert
-    
+       
     def check_camembert(self, camembert_sprites):
         for camembert in camembert_sprites:
             if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:

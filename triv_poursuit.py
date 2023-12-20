@@ -251,7 +251,7 @@ while running:
 
     for gamer in gamer_sprites:
         draw_button(screen, gamer.player_name, button_x_, button_y_, 150, button_height, active_color, inactive_color,25)
-        draw_button(screen, f"{gamer.score}   {len(gamer.camembert_part)}/5", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
+        draw_button(screen, f"pts : {gamer.score}  {len(gamer.camembert_part)}/6", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
 
         # mise à jour des positions des boutons pour le prochain joueur
         button_x_ += 120
@@ -320,6 +320,7 @@ while running:
                 dice_rolled = False
                 dice_roll = 0
                 current_player_index = (current_player_index + 1) % main.nb_gamers
+                joueurs[current_player_index].yell()
                 question = ""
                 answers_rect = []
                 good_answers = []
