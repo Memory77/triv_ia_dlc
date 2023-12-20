@@ -202,11 +202,11 @@ while running:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     dice_rolled = False
+                    dice_roll = 0
                     etat_jeu = ETAT_LANCER_DE 
                     current_player_index = (current_player_index + 1) % main.nb_gamers
                     joueurs[current_player_index].yell()
                     print(f"Passage au joueur {current_player_index + 1}")
-                    dice_roll = 0
 
     
     # définition visuelle de l'interface
