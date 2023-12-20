@@ -127,6 +127,7 @@ camembert_sprites.add(camembert_blue)
 camembert_sprites.add(camembert_yellow)
 camembert_sprites.add(camembert_purple)
 camembert_sprites.add(camembert_orange)
+
 #création des trous
 fall_one = Element(0, 0, "fall")
 
@@ -150,8 +151,8 @@ camembert_yellow.set_image()
 camembert_purple.set_position(14, 0, cell_width, cell_height)
 camembert_purple.set_image()
 
-camembert_purple.set_position(7, 13, cell_width, cell_height)
-camembert_purple.set_image()
+camembert_orange.set_position(7, 13, cell_width, cell_height)
+camembert_orange.set_image()
 
 #idem pour le trou
 fall_one.set_position(10, 13, cell_width, cell_height)
