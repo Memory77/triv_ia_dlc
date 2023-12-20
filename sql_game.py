@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import sys
+import pandas as pd 
 
 def query_execute(cur, query: str, select: str = ''):
     # permet d'essayer d'exécuter une requête et de renvoyer les données
@@ -41,6 +42,58 @@ def categories():
     conn.close()
 
     return res
+
+
+# relie les bases de données avec le code  
+
+
+def question(categorie: str):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+
+    res = query_execute(cur, f'''
+                        SELECT DISTINCT question
+                        FROM question_answer
+                        WHERE categorie_name = "{categorie}"
+                        ORDER BY random())''', 'SELECT_ALL') 
+
+    conn.close()
+    return res
+
+
+def answers(question: str):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+
+    res = query_execute(cur, f'''
+                        SELECT answer
+                        FROM question_answer
+                        WHERE question_name = "{question}"
+                        ORDER BY random())''', 'SELECT_ALL')
+
+    res = query_execute(cur, f'SELECT * FROM answer', 'SELECT_ALL')
+    conn.close()
+
+    return res
+
+
+def good_answers(categorie: str, question: str, answer: str):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    
+    res = query_execute(cur, f'''
+                        SELECT good_answer 
+                        FROM question_answer
+                        WHERE categorie_name = "{categories}" 
+                        AND question = "{question}"
+                        AND answer = "{answer}" 
+                        ''', 'SELECT_ALL')
+    conn.close()
+    if res[0] == 1:
+        return True
+    else:
+        return False
 
 
 ##################################################
