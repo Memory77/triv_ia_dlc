@@ -4,7 +4,6 @@ from gamers import *
 import random
 import main
 import sql_game
-import time
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice(dice: int):
@@ -114,20 +113,18 @@ for gamer in game_gamers_sprite:
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
 #creation des camemberts
-camembert_pink = Element(0, 0, "camembert", "pink")
+camembert_red = Element(0, 0, "camembert", "red")
 camembert_green = Element(0, 0, "camembert", "green")
 camembert_blue = Element(0, 0, "camembert", "blue")
 camembert_yellow = Element(0, 0, "camembert", "yellow")
 camembert_purple = Element(0, 0, "camembert", "purple")
-camembert_orange = Element(0, 0, "camembert", "orange")
 
 camembert_sprites = pygame.sprite.Group()
-camembert_sprites.add(camembert_pink)
+camembert_sprites.add(camembert_red)
 camembert_sprites.add(camembert_green)
 camembert_sprites.add(camembert_blue)
 camembert_sprites.add(camembert_yellow)
 camembert_sprites.add(camembert_purple)
-camembert_sprites.add(camembert_orange)
 
 #création des trous
 fall_one = Element(0, 0, "fall")
@@ -137,8 +134,8 @@ fall_sprites.add(fall_one)
 
 
 #requalibration de la position et de l'image du camembert (6 camemberts disposés dans le plateau)
-camembert_pink.set_position(0, 24, cell_width, cell_height)
-camembert_pink.set_image()
+camembert_red.set_position(0, 24, cell_width, cell_height)
+camembert_red.set_image()
 
 camembert_green.set_position(14, 24, cell_width, cell_height)
 camembert_green.set_image()
@@ -152,16 +149,12 @@ camembert_yellow.set_image()
 camembert_purple.set_position(14, 0, cell_width, cell_height)
 camembert_purple.set_image()
 
-camembert_orange.set_position(12, 13, cell_width, cell_height)
-camembert_orange.set_image()
-
 #idem pour le trou
 fall_one.set_position(10, 13, cell_width, cell_height)
 fall_one.set_image()
 
 
 # États de jeu
-
 ETAT_LANCER_DE = 1
 ETAT_QUESTION = 2
 etat_jeu = ETAT_LANCER_DE
@@ -273,24 +266,22 @@ while running:
             draw_button(screen, f"{player_moves}", 1450, 200, 200, button_height, active_color, inactive_color, 40)
             
             
-    elif etat_jeu == ETAT_QUESTION:  # le joueur a épuisé son temps 
+    elif etat_jeu == ETAT_QUESTION:
         
         draw_button(screen, f"{joueurs[current_player_index].player_name}", button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         
         ##id categorie de la position du gamer 
         case_categorie_id = game_board[joueurs[current_player_index].y][joueurs[current_player_index].x]
-        
 
         # catégorie et question
         question_button_y = 200
-        draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, active_color, inactive_color, 50) # catégorie
+        draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, inactive_color, inactive_color, 50) # catégorie
         question_button_y += 50
         if question == "":
-            temps_debut = time.time()
             question = sql_game.question(case_categorie_id)
             question_wrapped = auto_wrap(question, 30)
         for line in question_wrapped:
-            draw_button(screen, line, button_x, question_button_y, button_width, 20, active_color, inactive_color, 35) # question
+            draw_button(screen, line, button_x, question_button_y, button_width, 20, inactive_color, inactive_color, 35) # question
             question_button_y += 20
         
         # réponses
@@ -308,22 +299,18 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             
-            for answer_id in range(len(answers_rect)): 
+            for answer_id in range(len(answers_rect)):
                 if answers_rect[answer_id].collidepoint(event.pos):
                     reponse = False
                     if good_answers[answer_id] == 1:
                         sound = pygame.mixer.Sound('sounds/hahaha.wav')
                         sound.play()
                         reponse = True
-                        temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
-                        if temps_reponse < 0:
-                            temps_reponse = 0 
-                        joueurs[current_player_index].score += temps_reponse * game.time_points 
 
             if reponse is not None:
                 if reponse == True: 
                     joueurs[current_player_index].take_camembert(camembert_sprites, game, cell_width, cell_height)
-                    joueurs[current_player_index].score += 500
+                    joueurs[current_player_index].score += game.simple_question_points
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
                 dice_roll = 0
@@ -348,5 +335,3 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
-
-

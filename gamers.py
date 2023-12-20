@@ -29,20 +29,28 @@ class Gamer(pygame.sprite.Sprite):
         
         if direction == "up":
             self.rect.y -= cell_height
+            self.y -= 1
             if self.rect.y < 0:
                 self.rect.y = (game.board_game_height - 1) * cell_height
+                self.y = game.board_game_height - 1
         elif direction == "down":
             self.rect.y += cell_height
+            self.y += 1
             if self.rect.y > (game.board_game_height - 1) * cell_height:
                 self.rect.y = 0
+                self.y = 0
         elif direction == "left":
             self.rect.x -= cell_width
+            self.x -= 1
             if self.rect.x < 0:
                 self.rect.x = (game.board_game_width - 1) * cell_width
+                self.x = game.board_game_width - 1
         elif direction == "right":
             self.rect.x += cell_width
+            self.x += 1
             if self.rect.x > (game.board_game_width - 1) * cell_width:
                 self.rect.x = 0
+                self.x = 0
         
         # boucle déplaçant les autres joueurs
         for gamer in game.gamers:
@@ -110,6 +118,7 @@ class Gamer(pygame.sprite.Sprite):
     def take_camembert(self, camembert_sprites, game, cell_width, cell_height):
         for camembert in camembert_sprites:
             if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
+                self.score += game.camembert_question_points
                 camembert.kill()
                 self.camembert_part.append(camembert.color)
                 sound = pygame.mixer.Sound('sounds/take_camembert.wav')
@@ -134,6 +143,8 @@ class Gamer(pygame.sprite.Sprite):
                 print(camembert_sprites)
                 print(self.camembert_part)
     
+    
+    
 
 
 
@@ -156,22 +167,19 @@ class Element(pygame.sprite.Sprite):
             self.image = pygame.image.load('img/trou-noir.png')
 
         elif self.name_element == "camembert":
-            if self.color == "pink":
-                self.image = pygame.image.load('img/pink.png')
+            if self.color == "red":
+                self.image = pygame.image.load('img/camembert_red.png')
             elif self.color == "blue":
-                self.image = pygame.image.load('img/blue.png')
+                self.image = pygame.image.load('img/camembert_blue.png')
             elif self.color == "green":
-                self.image = pygame.image.load('img/green.png')
+                self.image = pygame.image.load('img/camembert_green.png')
             elif self.color == "yellow":
-                self.image = pygame.image.load('img/yellow.png')
+                self.image = pygame.image.load('img/camembert_yellow.png')
             elif self.color == "purple":
-                self.image = pygame.image.load('img/purple.png')
-            elif self.color == "orange":
-                self.image = pygame.image.load('img/orange.png')
+                self.image = pygame.image.load('img/camembert_purple.png')
 
     # def check_fall(self, fall_sprites):
     #     for fall in fall_sprites:
     #         if self.rect.colliderect(fall.rect):
 
    
-
