@@ -183,18 +183,21 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if dice_rolled and player_moves > 0:
                 if event.key == pygame.K_LEFT:
-                    joueurs[current_player_index].move("left", cell_height, cell_width, game, camembert_sprites)
+                    joueurs[current_player_index].move("left", cell_height, cell_width, game)
                     player_moves -= 1
                 elif event.key == pygame.K_RIGHT:
-                    joueurs[current_player_index].move("right", cell_height, cell_width, game, camembert_sprites)
+                    joueurs[current_player_index].move("right", cell_height, cell_width, game)
                     player_moves -= 1
                 elif event.key == pygame.K_UP:
-                    joueurs[current_player_index].move("up", cell_height, cell_width, game, camembert_sprites)
+                    joueurs[current_player_index].move("up", cell_height, cell_width, game)
                     player_moves -= 1
                 elif event.key == pygame.K_DOWN:
-                    joueurs[current_player_index].move("down", cell_height, cell_width, game, camembert_sprites)
+                    joueurs[current_player_index].move("down", cell_height, cell_width, game)
                     player_moves -= 1
-
+                on_camembert = joueurs[current_player_index].check_camembert(camembert_sprites)
+                if on_camembert:
+                    etat_jeu = ETAT_QUESTION
+                    
             if player_moves == 0 and dice_rolled:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour

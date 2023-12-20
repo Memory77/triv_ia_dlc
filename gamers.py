@@ -11,7 +11,8 @@ class Gamer(pygame.sprite.Sprite):
         self.player_name = player_name
         self.x = x
         self.y = y
-        self.camembert_part = []
+        self.camembert_colors = []
+        self.camembert_part = 0
         self.score = 0
         self.sound = []
         self.personnage = personnage
@@ -22,11 +23,10 @@ class Gamer(pygame.sprite.Sprite):
         self.rect.x = col * cell_width
         self.rect.y = row * cell_height
 
-    def move(self, direction, cell_height, cell_width, game, camembert_sprites):
+    def move(self, direction, cell_height, cell_width, game):
         sound = pygame.mixer.Sound('sounds/step.wav')
         sound.play()
         
-        self.check_camembert(camembert_sprites)
         
         if direction == "up":
             self.rect.y -= cell_height
@@ -97,12 +97,11 @@ class Gamer(pygame.sprite.Sprite):
         ###à definir methodes camembert
     
     def check_camembert(self, camembert_sprites):
-        global etat_jeu
         for camembert in camembert_sprites:
-            if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
+            if self.rect.colliderect(camembert.rect):
                 camembert.kill()
-                etat_jeu = 2
-                break
+                return True
+        return False
     
     # def take_camembert(self, camembert_sprites):
     #     for camembert in camembert_sprites:
