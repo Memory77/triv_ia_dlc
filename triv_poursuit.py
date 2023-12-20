@@ -214,7 +214,7 @@ while running:
                 on_camembert = joueurs[current_player_index].check_camembert(camembert_sprites)
                 if on_camembert:
                     etat_jeu = ETAT_QUESTION
-                    
+                    player_moves = 0
             if player_moves == 0 and dice_rolled:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
@@ -222,11 +222,11 @@ while running:
                     answers_rect = []
                     good_answers = []
                     dice_rolled = False
+                    dice_roll = 0
                     etat_jeu = ETAT_LANCER_DE 
                     current_player_index = (current_player_index + 1) % main.nb_gamers
                     joueurs[current_player_index].yell()
                     print(f"Passage au joueur {current_player_index + 1}")
-                    dice_roll = 0
 
     
     # définition visuelle de l'interface
@@ -246,7 +246,7 @@ while running:
 
     for gamer in gamer_sprites:
         draw_button(screen, gamer.player_name, button_x_, button_y_, 150, button_height, active_color, inactive_color,25)
-        draw_button(screen, f"{gamer.score}", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
+        draw_button(screen, f"{gamer.score}   {len(gamer.camembert_part)}/5", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
 
         # mise à jour des positions des boutons pour le prochain joueur
         button_x_ += 120
@@ -310,7 +310,7 @@ while running:
 
             if reponse is not None:
                 if reponse == True: 
-                    joueurs[current_player_index].take_camembert(camembert_sprites)
+                    joueurs[current_player_index].take_camembert(camembert_sprites, game, cell_width, cell_height)
                     joueurs[current_player_index].score += 500
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
@@ -320,13 +320,7 @@ while running:
                 answers_rect = []
                 good_answers = []
                 
-        #######
-        #
-        #
-        #
-        #
-        #definir reste code
-        
+      
         
     #on dessine les différents groupe de sprites
     gamer_sprites.draw(screen)
