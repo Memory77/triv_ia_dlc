@@ -9,6 +9,12 @@ import sql_game
 def roll_dice(dice: int):
     return random.randint(1, dice)
 
+def verifier_reponse(response):
+    if response == False:
+        sound = pygame.mixer.Sound('sounds/hahaha.wav')
+        sound.play()
+    return response  # retourne true si la réponse est correcte, False sinon
+
 def draw_button(screen, text, x, y, width, height, active_color, inactive_color, font_size):
     mouse = pygame.mouse.get_pos()
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
@@ -28,6 +34,9 @@ def draw_button(screen, text, x, y, width, height, active_color, inactive_color,
 
 # Initialisation de Pygame
 pygame.init()
+
+pygame.mixer.init() 
+
 width, height = 1800, 1000  # Ajustez selon vos besoins
 screen = pygame.display.set_mode((width, height))
 
@@ -65,30 +74,6 @@ for categorie in sql_game.categories():
 np.random.seed(5)#graine pour figer le random choice mais c pas obligé en soit
 game_board = np.random.choice(cat_id, size=(15, 25))
 
-# limitations = [
-#     [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7],
-#     [0, 8], [0, 9], [0, 10], [0, 11], [0, 12], [0, 13], [0, 14],
-#     [0, 15], [0, 16], [0, 17], [0, 18], [0, 19], [0, 20], [0, 21],
-#     [0, 22], [0, 23], [0, 24], [1, 0], [2, 0], [1, 1], [1, 24], [1, 23], [2, 24],
-#     [14, 0], [14, 1], [14, 2], [14, 3], [14, 4], [14, 5], [14, 6], [14, 7],
-#     [14, 8], [14, 9], [14, 10], [14, 11], [14, 12], [14, 13], [14, 14],
-#     [14, 15], [14, 16], [14, 17], [14, 18], [14, 19], [14, 20], [14, 21],
-#     [14, 22], [14, 23], [14, 24], [14, 18], [14, 19], [14, 20], [14, 21],
-#     ## continuer les limitations
-# ]
-# for coords in limitations:
-#     y, x = coords
-#     game_board[y, x] = False
-# print(game_board)
-
-
-# definition d'une couleur pour chaque catégorie
-#1 -> rose
-#2 -> vert
-#3 -> bleu
-#4 -> jaune
-#5 -> purple
-#false -> noir
 
 # import du nouveau jeu
 game = main.new_game()
@@ -107,17 +92,10 @@ gamer_sprites = pygame.sprite.Group()
 joueurs = []
 game_gamers_sprite = game.gamers_sprite()
 for gamer in game_gamers_sprite:
-    # player_name = str(input(f'Pseudo joueur {num_joueur} : '))
-    # personnage = int(input('Quel personnage veux-tu prendre ?\n1 : Deadpool\n2 : Captain America\n3 : orc\n4 : un perso dark\n5 : un deuxieme perso encore plus dark\n6 : un viking\n '))
-    # nouveau_joueur = Gamer(0, 0, player_name)
-    # joueurs.append(nouveau_joueur)
-    # gamer_sprites.add(nouveau_joueur)
-    # nouveau_joueur.set_position(7, 12, cell_width, cell_height)
-    # nouveau_joueur.set_image(personnage)
     joueurs.append(gamer)
     gamer_sprites.add(gamer)
     gamer.set_position(gamer.y, gamer.x, cell_width, cell_height)
-    gamer.set_image(gamer.personnage)
+    gamer.set_params(gamer.personnage)
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
 #creation des camemberts
@@ -174,7 +152,6 @@ dice_rolled = False
 running = True
 while running:
     
-    
     #definition visuel du plateau (qui est remis à jour a chaque tour dans la boucle)
     for i in range(game.board_game_height):
         for j in range(game.board_game_width):
@@ -217,17 +194,21 @@ while running:
                 elif event.key == pygame.K_DOWN:
                     joueurs[current_player_index].move("down", cell_height, cell_width, game)
                     player_moves -= 1
-
+                on_camembert = joueurs[current_player_index].check_camembert(camembert_sprites)
+                if on_camembert:
+                    etat_jeu = ETAT_QUESTION
+                    
             if player_moves == 0 and dice_rolled:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     dice_rolled = False
                     etat_jeu = ETAT_LANCER_DE 
                     current_player_index = (current_player_index + 1) % main.nb_gamers
+                    joueurs[current_player_index].yell()
                     print(f"Passage au joueur {current_player_index + 1}")
                     dice_roll = 0
 
-
+    
     # définition visuelle de l'interface
     interface_rect = pygame.Rect(interface_x, interface_y, interface_width, interface_height)
     pygame.draw.rect(screen, interface_bg_color, interface_rect)
@@ -259,32 +240,71 @@ while running:
     
     # mise à jour le texte du bouton en fonction de l'état du jeu
     if etat_jeu == ETAT_LANCER_DE:
-        texte_bouton = f"Joueur {current_player_index + 1} : Lancer le dé"
+        texte_bouton = f"{joueurs[current_player_index].player_name} : Lancer le dé"
         draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         if dice_roll > 0:
-            draw_button(screen, str(dice_roll), button_x, 150, button_width, button_height, active_color, inactive_color, 40)
+            draw_button(screen, f"{player_moves}", 1450, 200, 200, button_height, active_color, inactive_color, 40)
+            
+            
     elif etat_jeu == ETAT_QUESTION:
         
+        draw_button(screen, f"{joueurs[current_player_index].player_name}", button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
+        
+        ##id categorie de la position du gamer 
+        case_categorie_id = game_board[joueurs[current_player_index].y][joueurs[current_player_index].x]
+        
+        questions_et_reponses = {
+            "Qu'est ce que l'IA ? (test)": {
+                "la bonne réponse": True,
+                "suggestion_2": False,
+                "suggestion_3": False,
+                "suggestion_4": False
+            }
+        }
 
+        # creation des rectangles pour les boutons de réponse
+        reponse_1_rect = pygame.Rect(button_x, 250, button_width, button_height)
+        reponse_2_rect = pygame.Rect(button_x, 300, button_width, button_height)
+        reponse_3_rect = pygame.Rect(button_x, 350, button_width, button_height)
+        reponse_4_rect = pygame.Rect(button_x, 400, button_width, button_height)
+        
+        
+        la_question = "Qu'est ce que l'IA ? (test)"
+        draw_button(screen, la_question, button_x, 200, button_width, button_height, active_color, inactive_color, 40)
+        draw_button(screen, "la bonne réponse", button_x, 250, button_width, button_height, active_color, inactive_color, 35)
+        draw_button(screen, "suggestion_2", button_x, 300, button_width, button_height, active_color, inactive_color, 35)
+        draw_button(screen, "suggestion_3", button_x, 350, button_width, button_height, active_color, inactive_color, 35)
+        draw_button(screen, "suggestion_4", button_x, 400, button_width, button_height, active_color, inactive_color, 35)
+        
+        reponse = None
 
-        la_question = "Qu'est ce que l'IA ? (test)" #requete en bdd en fonction de la valeur de la case actuelle avec toute ses suggestions
-        #choisir les réponses avec l'event mouse ou le press key ? 
-        draw_button(screen, la_question, button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
-        draw_button(screen, "suggestion_1", button_x, 150, button_width, button_height, active_color, inactive_color, 40)
-        draw_button(screen, "suggestion_2", button_x, 200, button_width, button_height, active_color, inactive_color, 40)
-        draw_button(screen, "suggestion_3", button_x, 250, button_width, button_height, active_color, inactive_color, 40)
-        draw_button(screen, "suggestion_4", button_x, 300, button_width, button_height, active_color, inactive_color, 40)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if reponse_1_rect.collidepoint(event.pos):
+                reponse = "la bonne réponse"
+            elif reponse_2_rect.collidepoint(event.pos):
+                reponse = "suggestion_2"
+            elif reponse_3_rect.collidepoint(event.pos):
+                reponse = "suggestion_3"
+            elif reponse_4_rect.collidepoint(event.pos):
+                reponse = "suggestion_4"
+
+            if reponse is not None and reponse in questions_et_reponses[la_question]:
+                if verifier_reponse(questions_et_reponses[la_question][reponse]): 
+                    joueurs[current_player_index].take_camembert(camembert_sprites)
+                    joueurs[current_player_index].score += 500
+                etat_jeu = ETAT_LANCER_DE
+                dice_rolled = False
+                dice_roll = 0
+                current_player_index = (current_player_index + 1) % main.nb_gamers
+                
         #######
         #
         #
         #
         #
         #definir reste code
-        # Passer au joueur suivant si il a repondu faux une fois toutes les étapes
-        # current_player_index = (current_player_index + 1) % nombre_de_joueurs
-        # etat_jeu = ETAT_LANCER_DE  # Réinitialiser l'état du jeu pour le prochain joueur
-
-
+        
+        
     #on dessine les différents groupe de sprites
     gamer_sprites.draw(screen)
     gamer_sprites.update()
