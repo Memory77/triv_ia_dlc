@@ -197,7 +197,7 @@ while running:
                 on_camembert = joueurs[current_player_index].check_camembert(camembert_sprites)
                 if on_camembert:
                     etat_jeu = ETAT_QUESTION
-                    
+                    player_moves = 0
             if player_moves == 0 and dice_rolled:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
@@ -290,7 +290,7 @@ while running:
 
             if reponse is not None and reponse in questions_et_reponses[la_question]:
                 if verifier_reponse(questions_et_reponses[la_question][reponse]): 
-                    joueurs[current_player_index].take_camembert(camembert_sprites)
+                    joueurs[current_player_index].take_camembert(camembert_sprites, game)
                     joueurs[current_player_index].score += 500
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False

@@ -102,13 +102,17 @@ class Gamer(pygame.sprite.Sprite):
                 return True
         return False
     
-    def take_camembert(self, camembert_sprites):
+    def take_camembert(self, camembert_sprites, game):
         for camembert in camembert_sprites:
             if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
                 camembert.kill()
                 self.camembert_part.append(camembert.color)
                 sound = pygame.mixer.Sound('sounds/take_camembert.wav')
                 sound.play()
+                #generation d'un nouveau camembert aléatoirement 
+                
+                print(game.board_game_height)
+                print(game.board_game_width)
                 print(camembert_sprites)
                 print(self.camembert_part)
     
