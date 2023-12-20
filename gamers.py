@@ -19,8 +19,8 @@ class Gamer(pygame.sprite.Sprite):
 
     def set_position(self, row, col, cell_width, cell_height):
         # définit la position du sprite basée sur la position de la cellule du tableau
-        self.rect.x = col * cell_width
-        self.rect.y = row * cell_height
+        self.rect.x = col * cell_width 
+        self.rect.y = row * cell_height 
 
     def move(self, direction, cell_height, cell_width, game):
         sound = pygame.mixer.Sound('sounds/step.wav')
@@ -152,34 +152,30 @@ class Gamer(pygame.sprite.Sprite):
 class Element(pygame.sprite.Sprite):
     def __init__(self, x, y, name_element, color = 'yellow'):
         super().__init__()
-        self.image = pygame.image.load('img/big_player_one.png')
+        self.image = pygame.image.load('img/mini_player_one.png')
         self.rect = self.image.get_rect(topleft=(x, y))
         self.name_element = name_element
         self.color = color
         
     def set_position(self, row, col, cell_width, cell_height):
         # définit la position du sprite basée sur la position de la cellule du tableau
-        self.rect.x = col * cell_width
-        self.rect.y = row * cell_height
+        self.rect.x = col * cell_width + 15
+        self.rect.y = row * cell_height  + 10
 
     def set_image(self):
         if self.name_element == "fall":
-            self.image = pygame.image.load('img/trou-noir.png')
+            self.image = pygame.image.load('img/fall.png')
 
         elif self.name_element == "camembert":
-            if self.color == "red":
-                self.image = pygame.image.load('img/camembert_red.png')
+            if self.color == "pink":
+                self.image = pygame.image.load('img/pink.png')
             elif self.color == "blue":
-                self.image = pygame.image.load('img/camembert_blue.png')
+                self.image = pygame.image.load('img/blue.png')
             elif self.color == "green":
-                self.image = pygame.image.load('img/camembert_green.png')
+                self.image = pygame.image.load('img/green.png')
             elif self.color == "yellow":
-                self.image = pygame.image.load('img/camembert_yellow.png')
+                self.image = pygame.image.load('img/yellow.png')
             elif self.color == "purple":
-                self.image = pygame.image.load('img/camembert_purple.png')
-
-    # def check_fall(self, fall_sprites):
-    #     for fall in fall_sprites:
-    #         if self.rect.colliderect(fall.rect):
-
-   
+                self.image = pygame.image.load('img/purple.png')
+            elif self.color == "orange":
+                self.image = pygame.image.load('img/orange.png')

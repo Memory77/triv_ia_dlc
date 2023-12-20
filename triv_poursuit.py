@@ -114,11 +114,12 @@ for gamer in game_gamers_sprite:
 print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
 
 #creation des camemberts
-camembert_red = Element(0, 0, "camembert", "red")
+camembert_red = Element(0, 0, "camembert", "pink")
 camembert_green = Element(0, 0, "camembert", "green")
 camembert_blue = Element(0, 0, "camembert", "blue")
 camembert_yellow = Element(0, 0, "camembert", "yellow")
 camembert_purple = Element(0, 0, "camembert", "purple")
+camembert_orange = Element(0, 0, "camembert", "orange")
 
 camembert_sprites = pygame.sprite.Group()
 camembert_sprites.add(camembert_red)
@@ -126,6 +127,7 @@ camembert_sprites.add(camembert_green)
 camembert_sprites.add(camembert_blue)
 camembert_sprites.add(camembert_yellow)
 camembert_sprites.add(camembert_purple)
+camembert_sprites.add(camembert_orange)
 
 #création des trous
 fall_one = Element(0, 0, "fall")
@@ -149,6 +151,9 @@ camembert_yellow.set_image()
 
 camembert_purple.set_position(14, 0, cell_width, cell_height)
 camembert_purple.set_image()
+
+camembert_orange.set_position(7, 13, cell_width, cell_height)
+camembert_orange.set_image()
 
 #idem pour le trou
 fall_one.set_position(10, 13, cell_width, cell_height)
