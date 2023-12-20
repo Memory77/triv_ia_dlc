@@ -306,6 +306,10 @@ while running:
                         sound = pygame.mixer.Sound('sounds/hahaha.wav')
                         sound.play()
                         reponse = True
+                        temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
+                        if temps_reponse < 0:
+                            temps_reponse = 0 
+                        joueurs[current_player_index].score += temps_reponse * game.time_points
 
             if reponse is not None:
                 if reponse == True: 
