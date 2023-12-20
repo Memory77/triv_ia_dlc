@@ -12,7 +12,7 @@ class Gamer(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.camembert_colors = []
-        self.camembert_part = 0
+        self.camembert_part = [] #ou voir pour mettre 0 plutot
         self.score = 0
         self.sound = []
         self.personnage = personnage
@@ -98,15 +98,19 @@ class Gamer(pygame.sprite.Sprite):
     
     def check_camembert(self, camembert_sprites):
         for camembert in camembert_sprites:
-            if self.rect.colliderect(camembert.rect):
-                camembert.kill()
+            if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
                 return True
         return False
     
-    # def take_camembert(self, camembert_sprites):
-    #     for camembert in camembert_sprites:
-    #         if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
-    #             camembert.kill()
+    def take_camembert(self, camembert_sprites):
+        for camembert in camembert_sprites:
+            if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
+                camembert.kill()
+                self.camembert_part.append(camembert.color)
+                sound = pygame.mixer.Sound('sounds/take_camembert.wav')
+                sound.play()
+                print(camembert_sprites)
+                print(self.camembert_part)
     
     
     

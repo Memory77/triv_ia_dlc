@@ -290,7 +290,7 @@ while running:
 
             if reponse is not None and reponse in questions_et_reponses[la_question]:
                 if verifier_reponse(questions_et_reponses[la_question][reponse]): 
-                    #joueurs[current_player_index].take_camembert(camembert_sprites)
+                    joueurs[current_player_index].take_camembert(camembert_sprites)
                     joueurs[current_player_index].score += 500
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
