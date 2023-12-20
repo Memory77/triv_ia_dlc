@@ -9,11 +9,6 @@ import sql_game
 def roll_dice(dice: int):
     return random.randint(1, dice)
 
-def verifier_reponse(response):
-    if response == False:
-        sound = pygame.mixer.Sound('sounds/hahaha.wav')
-        sound.play()
-    return response  # retourne true si la réponse est correcte, False sinon
 
 def draw_button(screen, text, x, y, width, height, active_color, inactive_color, font_size):
     mouse = pygame.mouse.get_pos()
@@ -76,6 +71,8 @@ button_width = 400
 button_height = 50
 active_color = (255, 105, 180)
 inactive_color = (10, 210, 255)
+answer_active_color = (255, 180, 105)
+answer_inactive_color = (10, 255, 210)
 
 
 
@@ -165,6 +162,8 @@ current_player_index = 0
 dice_roll = 0
 dice_rolled = False
 question = ""
+answers_rect = []
+good_answers = []
 
 # Boucle principale
 running = True
@@ -220,6 +219,8 @@ while running:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
                     question = ""
+                    answers_rect = []
+                    good_answers = []
                     dice_rolled = False
                     etat_jeu = ETAT_LANCER_DE 
                     current_player_index = (current_player_index + 1) % main.nb_gamers
@@ -272,21 +273,6 @@ while running:
         ##id categorie de la position du gamer 
         case_categorie_id = game_board[joueurs[current_player_index].y][joueurs[current_player_index].x]
         
-        questions_et_reponses = {
-            "Qu'est ce que l'IA ? (test)": {
-                "la bonne réponse": True,
-                "suggestion_2": False,
-                "suggestion_3": False,
-                "suggestion_4": False
-            }
-        }
-
-        # creation des rectangles pour les boutons de réponse
-        reponse_1_rect = pygame.Rect(button_x, 250, button_width, button_height)
-        reponse_2_rect = pygame.Rect(button_x, 300, button_width, button_height)
-        reponse_3_rect = pygame.Rect(button_x, 350, button_width, button_height)
-        reponse_4_rect = pygame.Rect(button_x, 400, button_width, button_height)
-        
 
         # catégorie et question
         question_button_y = 200
@@ -296,34 +282,43 @@ while running:
             question = sql_game.question(case_categorie_id)
             question_wrapped = auto_wrap(question, 30)
         for line in question_wrapped:
-            draw_button(screen, line, button_x, question_button_y, button_width, 20, active_color, inactive_color, 20) # question
+            draw_button(screen, line, button_x, question_button_y, button_width, 20, active_color, inactive_color, 35) # question
             question_button_y += 20
         
         # réponses
+        question_button_y += 10
         for answer in sql_game.answers(case_categorie_id, question):
-            draw_button(screen, answer[0], button_x, question_button_y, button_width, button_height, active_color, inactive_color, 35)
-            question_button_y += 50
+            answer_wrapped = auto_wrap(answer[0], 30)
+            for line in answer_wrapped:
+                draw_button(screen, line, button_x, question_button_y, button_width, 20, answer_active_color, answer_inactive_color, 30)
+                answers_rect.append(pygame.Rect(button_x, question_button_y, button_width, 20))
+                good_answers.append(answer[1])
+                question_button_y += 20
+            question_button_y += 10
         
         reponse = None
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if reponse_1_rect.collidepoint(event.pos):
-                reponse = "la bonne réponse"
-            elif reponse_2_rect.collidepoint(event.pos):
-                reponse = "suggestion_2"
-            elif reponse_3_rect.collidepoint(event.pos):
-                reponse = "suggestion_3"
-            elif reponse_4_rect.collidepoint(event.pos):
-                reponse = "suggestion_4"
+            
+            for answer_id in range(len(answers_rect)):
+                if answers_rect[answer_id].collidepoint(event.pos):
+                    reponse = False
+                    if good_answers[answer_id] == 1:
+                        sound = pygame.mixer.Sound('sounds/hahaha.wav')
+                        sound.play()
+                        reponse = True
 
-            if reponse is not None and reponse in questions_et_reponses[la_question]:
-                if verifier_reponse(questions_et_reponses[la_question][reponse]): 
+            if reponse is not None:
+                if reponse == True: 
                     joueurs[current_player_index].take_camembert(camembert_sprites)
                     joueurs[current_player_index].score += 500
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
                 dice_roll = 0
                 current_player_index = (current_player_index + 1) % main.nb_gamers
+                question = ""
+                answers_rect = []
+                good_answers = []
                 
         #######
         #
