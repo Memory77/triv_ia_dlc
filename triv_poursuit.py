@@ -287,26 +287,22 @@ while running:
         reponse_3_rect = pygame.Rect(button_x, 350, button_width, button_height)
         reponse_4_rect = pygame.Rect(button_x, 400, button_width, button_height)
         
-        
+
         # catégorie et question
-        button_y = 200
-        draw_button(screen, case_categorie_id, button_x, button_y, button_width, button_height, active_color, inactive_color, 50) # catégorie
-        button_y += 50
+        question_button_y = 200
+        draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, active_color, inactive_color, 50) # catégorie
+        question_button_y += 50
         if question == "":
-            question = auto_wrap(sql_game.question(case_categorie_id), 30)
-        for line in question:
-            draw_button(screen, line, button_x, button_y, button_width, button_height * 2, active_color, inactive_color, 20) # question
-            button_y += 20
+            question = sql_game.question(case_categorie_id)
+            question_wrapped = auto_wrap(question, 30)
+        for line in question_wrapped:
+            draw_button(screen, line, button_x, question_button_y, button_width, 20, active_color, inactive_color, 20) # question
+            question_button_y += 20
         
         # réponses
-        draw_button(screen, "la bonne réponse", button_x, button_y, button_width, button_height, active_color, inactive_color, 35)
-        button_y += 35
-        draw_button(screen, "suggestion_2", button_x, button_y, button_width, button_height, active_color, inactive_color, 35)
-        button_y += 35
-        draw_button(screen, "suggestion_3", button_x, button_y, button_width, button_height, active_color, inactive_color, 35)
-        button_y += 35
-        draw_button(screen, "suggestion_4", button_x, button_y, button_width, button_height, active_color, inactive_color, 35)
-        button_y += 35
+        for answer in sql_game.answers(case_categorie_id, question):
+            draw_button(screen, answer[0], button_x, question_button_y, button_width, button_height, active_color, inactive_color, 35)
+            question_button_y += 50
         
         reponse = None
 

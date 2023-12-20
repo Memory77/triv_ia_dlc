@@ -19,18 +19,26 @@ Actualités IA,Quand l'ia depassera l'intelligence d'un humain selon Mo Gawdat (
 Actualités IA,Quand l'ia depassera l'intelligence d'un humain selon Mo Gawdat (ex-directeur commercial de Google X) ?,en 2036,0
 Actualités IA,Quand l'ia depassera l'intelligence d'un humain selon Mo Gawdat (ex-directeur commercial de Google X) ?,en 2046,0
 Actualités IA,Quand l'ia depassera l'intelligence d'un humain selon Mo Gawdat (ex-directeur commercial de Google X) ?,en 2050,0
-SQL,"Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée ""employes"" ?",SELECT * FROM employes,1
-SQL,"Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée ""employes"" ?",SELECT columns(employes),0
-SQL,"Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée ""employes"" ?",SHOW ALL employes;,0
-SQL,"Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée ""employes"" ?",GET employes;,0
+Culture,"D'après ChatGPT, quelles sont les fromages qui sentent le plus fort ?","Le fromage qui sent le plus fort est souvent considéré comme le fromage de munster, le fromage bleu ou certains fromages à pâte molle comme le camembert bien affiné.",1
+Culture,"D'après ChatGPT, quelles sont les fromages qui sentent le plus fort ?","Le fromage qui sent le plus fort est souvent considéré comme le fromage de munster, le fromage bleu ou le maroille.",0
+Culture,"D'après ChatGPT, quelles sont les fromages qui sentent le plus fort ?","Le fromage qui sent le plus fort est souvent considéré comme le fromage de munster, le maroille ou l'époisse.",0
+Culture,"D'après ChatGPT, quelles sont les fromages qui sentent le plus fort ?","Le fromage qui sent le plus fort est souvent considéré comme le Kiri®, la Vache Qui Rit® ou le Babybel®.",0
+Culture,Qui est considéré·e comme le premier programmeur au monde ?,Grace Hopper,0
+Culture,Qui est considéré·e comme le premier programmeur au monde ?,John McCarthy,0
+Culture,Qui est considéré·e comme le premier programmeur au monde ?,Alan Turing,0
+Culture,Qui est considéré·e comme le premier programmeur au monde ?,Ada Lovelace,1
+SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,SELECT * FROM employes,1
+SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,SELECT columns(employes),0
+SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,SHOW ALL employes;,0
+SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,GET employes;,0
 SQL,Quelle fonction est utilisée pour trouver le nombre de lignes dans une table ?,COUNT(*),1
 SQL,Quelle fonction est utilisée pour trouver le nombre de lignes dans une table ?,NUMROWS(),0
 SQL,Quelle fonction est utilisée pour trouver le nombre de lignes dans une table ?,TOTALROWS(),0
 SQL,Quelle fonction est utilisée pour trouver le nombre de lignes dans une table ?,ROWCOUNT(),0
-SQL,"Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée ""age"" à une table existante nommée ""clients"" ?",ALTER TABLE clients ADD COLUMN age INT,1
-SQL,"Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée ""age"" à une table existante nommée ""clients"" ?",UPDATE TABLE clients SET age = INT,0
-SQL,"Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée ""age"" à une table existante nommée ""clients"" ?",ADD age TO TABLE clients,0
-SQL,"Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée ""age"" à une table existante nommée ""clients"" ?",MODIFY clients ADD COLUMN age INT,0
+SQL,Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée 'age' à une table existante nommée 'clients' ?,ALTER TABLE clients ADD COLUMN age INT,1
+SQL,Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée 'age' à une table existante nommée 'clients' ?,UPDATE TABLE clients SET age = INT,0
+SQL,Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée 'age' à une table existante nommée 'clients' ?,ADD age TO TABLE clients,0
+SQL,Quelle déclaration est utilisée pour ajouter une nouvelle colonne appelée 'age' à une table existante nommée 'clients' ?,MODIFY clients ADD COLUMN age INT,0
 SQL,Que fait la clause WHERE dans une requête SQL ?,Elle spécifie l'ordre des résultats,0
 SQL,Que fait la clause WHERE dans une requête SQL ?,Elle filtre les résultats en fonction d'une condition,1
 SQL,Que fait la clause WHERE dans une requête SQL ?,Elle combine les résultats de plusieurs tables,0
@@ -42,18 +50,18 @@ SQL,Quelle est la différence entre GROUP BY et ORDER BY dans une requête SQL ?
 SQL,Que fait cette requête : INSERT INTO ma_table SELECT * FROM mon_autre_table,Ce code ne fonctionne pas.,0
 SQL,Que fait cette requête : INSERT INTO ma_table SELECT * FROM mon_autre_table,"On ajoute toutes les données de `mon_autre_table` dans `ma_table`, à condition que les champs aient le même nom.",0
 SQL,Que fait cette requête : INSERT INTO ma_table SELECT * FROM mon_autre_table,"On ajoute toutes les données de `mon_autre_table` dans `ma_table`, à condition qu'il y ait le même nombre de champs et de même type.",1
-Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open(""example.txt"", ""r"")",0
-Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open(""example.txt"", ""w"")",1
-Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open(""example.txt"", ""write"")",0
-Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open(""example.txt"", mode=""write"")",0
+Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open('example.txt', 'r')",0
+Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open('example.txt', 'w')",1
+Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open('example.txt', 'write')",0
+Python,Quelle est la méthode correcte pour ouvrir un fichier en mode écriture (write) en Python ?,"file = open('example.txt', mode='write')",0
 Python,Comment déclare-t-on une liste vide en Python ?,list = {},0
 Python,Comment déclare-t-on une liste vide en Python ?,list = [],1
 Python,Comment déclare-t-on une liste vide en Python ?,list = new List(),0
 Python,Comment déclare-t-on une liste vide en Python ?,list = list(),0
-Python,"Quelle est la différence entre ""=="" et ""is"" en Python ?","""=="" compare le contenu, ""is"" compare l'identité des objets",1
-Python,"Quelle est la différence entre ""=="" et ""is"" en Python ?","""is"" compare le contenu, ""=="" compare l'identité des objets",0
-Python,"Quelle est la différence entre ""=="" et ""is"" en Python ?"," ""=="" et ""is"" sont interchangeables",0
-Python,"Quelle est la différence entre ""=="" et ""is"" en Python ?","""is"" est utilisé pour les nombres, ""=="" pour les chaînes de caractères",0
+Python,Quelle est la différence entre '==' et 'is' en Python ?,"==' compare le contenu, 'is' compare l'identité des objets",1
+Python,Quelle est la différence entre '==' et 'is' en Python ?,"is' compare le contenu, '==' compare l'identité des objets",0
+Python,Quelle est la différence entre '==' et 'is' en Python ?, '==' et 'is' sont interchangeables,0
+Python,Quelle est la différence entre '==' et 'is' en Python ?,"is' est utilisé pour les nombres, '==' pour les chaînes de caractères",0
 Python,Comment ajoute-t-on un élément à la fin d'une liste en Python ?,list.append(item),1
 Python,Comment ajoute-t-on un élément à la fin d'une liste en Python ?,list.add(item),0
 Python,Comment ajoute-t-on un élément à la fin d'une liste en Python ?,list.insert(item),0
@@ -120,10 +128,10 @@ Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distan
 Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distant localement ?,git pull,0
 Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distant localement ?,git clone,1
 Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distant localement ?,git push,1
-Git/GitHub,"Quelle est la différence entre ""git merge"" et ""git rebase"" ?","""git merge"" combine les changements de deux branches, tandis que ""git rebase"" réécrit l'historique",0
-Git/GitHub,"Quelle est la différence entre ""git merge"" et ""git rebase"" ?",,1
-Git/GitHub,"Quelle est la différence entre ""git merge"" et ""git rebase"" ?","""git rebase"" combine les changements de deux branches, tandis que ""git merge"" réécrit l'historique",0
-Git/GitHub,"Quelle est la différence entre ""git merge"" et ""git rebase"" ?",Ces commandes ne sont pas utilisées dans Git,1
+Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,"git merge' combine les changements de deux branches, tandis que 'git rebase' réécrit l'historique",0
+Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,,1
+Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,"git rebase' combine les changements de deux branches, tandis que 'git merge' réécrit l'historique",0
+Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,Ces commandes ne sont pas utilisées dans Git,1
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git branch feature_branch,0
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git checkout -b feature_branch,1
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git switch -c feature_branch,1

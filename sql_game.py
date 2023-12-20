@@ -62,17 +62,16 @@ def question(categorie: str):
     return res[0]
 
 
-def answers(question: str):
+def answers(categorie: str, question: str):
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
 
     res = query_execute(cur, f'''
                         SELECT answer
                         FROM question_answer
-                        WHERE question_name = "{question}"
-                        ORDER BY random())''', 'SELECT_ALL')
-
-    res = query_execute(cur, f'SELECT * FROM answer', 'SELECT_ALL')
+                        WHERE categorie_name = "{categorie}"
+                        AND question = "{question}"
+                        ORDER BY random()''', 'SELECT_ALL')
     conn.close()
 
     return res
