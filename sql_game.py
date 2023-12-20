@@ -47,16 +47,39 @@ def categories():
 # relie les bases de données avec le code  
 
 
-def question(categorie: str):
+def question(gamer_id: int, categorie: str):
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
 
     res = query_execute(cur, f'''
                         SELECT DISTINCT question
-                        FROM question_answer
+                        FROM question_answer qa 
+                        LEFT OUTER JOIN question_already_answered qaa
+                                        ON qaa.question_answer_categorie = qa.categorie_name
+                                        AND qaa.question_answer_question = qa.question
+                                        AND qaa.gamer_id = {gamer_id}
                         WHERE categorie_name = "{categorie}"
+                        AND qaa.gamer_id IS NULL
                         ORDER BY random()
-                        LIMIT 1''', 'SELECT') 
+                        LIMIT 1''', 'SELECT')
+
+    if len(res) == 0:
+        query_execute(cur, f'''
+                        DELETE FROM question_already_answered
+                        WHERE id = {gamer_id}
+                        AND question_answer_categorie = "{categorie}"
+                        ''')
+        res = query_execute(cur, f'''
+                        SELECT DISTINCT question
+                        FROM question_answer qa 
+                        LEFT OUTER JOIN question_already_answered qaa
+                                        ON qaa.question_answer_categorie = qa.categorie_name
+                                        AND qaa.question_answer_question = qa.question
+                                        AND qaa.gamer_id = {gamer_id}
+                        WHERE categorie_name = "{categorie}"
+                        AND qaa.gamer_id IS NULL
+                        ORDER BY random()
+                        LIMIT 1''', 'SELECT')
 
     conn.close()
     return res[0]
@@ -93,6 +116,18 @@ def good_answers(categorie: str, question: str, answer: str):
         return True
     else:
         return False
+
+
+def question_already_answered(current_player_index: int, case_categorie_id: str, question: str):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    query_execute(cur, f'''
+    INSERT INTO question_already_answered VALUES ({current_player_index}, "{case_categorie_id}", "{question}")
+    ''', '')
+
+    conn.commit()
+    conn.close()
 
 
 ##################################################

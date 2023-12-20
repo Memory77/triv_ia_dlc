@@ -18,7 +18,9 @@ class NewGame:
                  camembert_question_points: int,
                  hole_points: int,
                  time_points: int,
-                 time_answer_out: int):
+                 time_answer_out: int,
+                 end_game_max_points: int,
+                 end_game_max_camembert: int):
         
         self.dice = dice
 
@@ -30,6 +32,8 @@ class NewGame:
         self.hole_points = hole_points
         self.time_points = time_points
         self.time_answer_out = time_answer_out
+        self.end_game_max_points = end_game_max_points
+        self.end_game_max_camembert = end_game_max_camembert
         
         self.gamers = []
         gamers_id = []# pour ne pas ajouter plusieurs fois le même joueur
@@ -58,3 +62,7 @@ class NewGame:
     def gamers_sprite(self):
         for gamer in self.gamers:
             yield gamer
+    
+
+    def victory(self) -> bool:
+        return False

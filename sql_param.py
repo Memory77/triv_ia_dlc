@@ -101,7 +101,9 @@ CREATE TABLE IF NOT EXISTS param (
     camembert_question_points INTEGER NOT NULL,
     hole_points INTEGER NOT NULL,
     time_points INTEGER NOT NULL,
-    time_answer_out INTEGER NOT NULL
+    time_answer_out INTEGER NOT NULL,
+    end_game_max_points INTEGER NOT NULL,
+    end_game_max_camembert INTEGER NOT NULL
 );''')
     
     #paramètre par défaut du jeu 
@@ -109,7 +111,10 @@ CREATE TABLE IF NOT EXISTS param (
     DELETE FROM param 
     ''')
     query_execute(cur, f'''
-    INSERT INTO param VALUES (4, 10, 8, 25, 15, 100, 150, -250, 10, 30)
+    INSERT INTO param VALUES (4, 10, 8, 25, 15, 100, 150, -250, 10, 30, 5000, 6)
+    ''')
+    query_execute(cur, f'''
+    DELETE FROM question_already_answered
     ''')
     
     # Fermeture de la connexion
