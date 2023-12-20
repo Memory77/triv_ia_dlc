@@ -179,5 +179,3 @@ class Element(pygame.sprite.Sprite):
                 self.image = pygame.image.load('img/purple.png')
             elif self.color == "orange":
                 self.image = pygame.image.load('img/orange.png')
-
-  
