@@ -226,7 +226,7 @@ while running:
 
     for gamer in gamer_sprites:
         draw_button(screen, gamer.player_name, button_x_, button_y_, 150, button_height, active_color, inactive_color,25)
-        draw_button(screen, f"{gamer.score}", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
+        draw_button(screen, f"{gamer.score}   {len(gamer.camembert_part)}/5", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
 
         # mise à jour des positions des boutons pour le prochain joueur
         button_x_ += 120
@@ -290,20 +290,14 @@ while running:
 
             if reponse is not None and reponse in questions_et_reponses[la_question]:
                 if verifier_reponse(questions_et_reponses[la_question][reponse]): 
-                    joueurs[current_player_index].take_camembert(camembert_sprites, game)
+                    joueurs[current_player_index].take_camembert(camembert_sprites, game, cell_width, cell_height)
                     joueurs[current_player_index].score += 500
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
                 dice_roll = 0
                 current_player_index = (current_player_index + 1) % main.nb_gamers
                 
-        #######
-        #
-        #
-        #
-        #
-        #definir reste code
-        
+      
         
     #on dessine les différents groupe de sprites
     gamer_sprites.draw(screen)

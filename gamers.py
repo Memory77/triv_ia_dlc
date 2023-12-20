@@ -102,14 +102,27 @@ class Gamer(pygame.sprite.Sprite):
                 return True
         return False
     
-    def take_camembert(self, camembert_sprites, game):
+    def take_camembert(self, camembert_sprites, game, cell_width, cell_height):
         for camembert in camembert_sprites:
             if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
                 camembert.kill()
                 self.camembert_part.append(camembert.color)
                 sound = pygame.mixer.Sound('sounds/take_camembert.wav')
                 sound.play()
+
                 #generation d'un nouveau camembert aléatoirement 
+                number_min = 0
+                number_rows = game.board_game_height - 1
+                y = random.randint(number_min, number_rows)
+
+                number_min = 0
+                number_cols = game.board_game_height - 1
+                x = random.randint(number_min, number_cols)
+                
+                new_camembert = Element(0, 0, "camembert", camembert.color)
+                new_camembert.set_position(y, x, cell_width, cell_height)
+                new_camembert.set_image()
+                camembert_sprites.add(new_camembert)
                 
                 print(game.board_game_height)
                 print(game.board_game_width)
@@ -151,6 +164,9 @@ class Element(pygame.sprite.Sprite):
             elif self.color == "purple":
                 self.image = pygame.image.load('img/camembert_purple.png')
 
-   
+    # def check_fall(self, fall_sprites):
+    #     for fall in fall_sprites:
+    #         if self.rect.colliderect(fall.rect):
+
    
 
