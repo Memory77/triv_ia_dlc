@@ -134,8 +134,6 @@ class Gamer(pygame.sprite.Sprite):
                 print(camembert_sprites)
                 print(self.camembert_part)
     
-    
-    
 
 
 

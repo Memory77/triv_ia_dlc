@@ -161,7 +161,7 @@ fall_one.set_image()
 
 
 # États de jeu
-score = 0
+
 ETAT_LANCER_DE = 1
 ETAT_QUESTION = 2
 etat_jeu = ETAT_LANCER_DE
@@ -308,13 +308,17 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             
-            for answer_id in range(len(answers_rect)):
+            for answer_id in range(len(answers_rect)): 
                 if answers_rect[answer_id].collidepoint(event.pos):
                     reponse = False
                     if good_answers[answer_id] == 1:
                         sound = pygame.mixer.Sound('sounds/hahaha.wav')
                         sound.play()
                         reponse = True
+                        temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
+                        if temps_reponse < 0:
+                            temps_reponse = 0 
+                        joueurs[current_player_index].score += temps_reponse * game.time_points 
 
             if reponse is not None:
                 if reponse == True: 

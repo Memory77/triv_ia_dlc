@@ -96,7 +96,12 @@ CREATE TABLE IF NOT EXISTS param (
 	big_dice INTEGER NOT NULL,
 	max_player INTEGER NOT NULL,
     board_game_width INTEGER NOT NULL,
-    board_game_height INTEGER NOT NULL
+    board_game_height INTEGER NOT NULL,
+    simple_question_points INTEGER NOT NULL,
+    camembert_question_points INTEGER NOT NULL,
+    hole_points INTEGER NOT NULL,
+    time_points INTEGER NOT NULL,
+    time_answer_out INTEGER NOT NULL
 );''')
     
     #paramètre par défaut du jeu 
@@ -104,7 +109,7 @@ CREATE TABLE IF NOT EXISTS param (
     DELETE FROM param 
     ''')
     query_execute(cur, f'''
-    INSERT INTO param VALUES (4, 10, 8, 25, 15)
+    INSERT INTO param VALUES (4, 10, 8, 25, 15, 100, 150, -250, 10, 30)
     ''')
     
     # Fermeture de la connexion
