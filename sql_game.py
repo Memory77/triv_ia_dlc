@@ -55,10 +55,11 @@ def question(categorie: str):
                         SELECT DISTINCT question
                         FROM question_answer
                         WHERE categorie_name = "{categorie}"
-                        ORDER BY random())''', 'SELECT_ALL') 
+                        ORDER BY random()
+                        LIMIT 1''', 'SELECT') 
 
     conn.close()
-    return res
+    return res[0]
 
 
 def answers(question: str):
