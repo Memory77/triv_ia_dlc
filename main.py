@@ -46,7 +46,7 @@ if True == False:
 else:
     # shunte
     nb_gamers = 2
-    dice = 1
+    dice = 20
 
 game = NewGame(nb_gamers, dice, board_game_width, board_game_height)
 

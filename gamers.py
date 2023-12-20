@@ -43,6 +43,12 @@ class Gamer(pygame.sprite.Sprite):
             self.rect.x += cell_width
             if self.rect.x > (game.board_game_width - 1) * cell_width:
                 self.rect.x = 0
+        
+        # boucle déplaçant les autres joueurs
+        for gamer in game.gamers:
+            if self.id != gamer.id:
+                if self.rect.x == gamer.rect.x and self.rect.y == gamer.rect.y:
+                    gamer.move(direction, cell_height, cell_width, game)
             
             
     def set_params(self,personnage):
