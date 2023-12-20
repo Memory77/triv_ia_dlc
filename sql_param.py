@@ -79,6 +79,16 @@ CREATE TABLE IF NOT EXISTS question_answer (
 	CONSTRAINT answer_FK FOREIGN KEY (categorie_name) REFERENCES categorie(name)
 );''')
     
+    # CREATE TABLE "question_already_answered"
+    query_execute(cur, f'''
+CREATE TABLE IF NOT EXISTS question_already_answered (
+	gamer_id INTEGER NOT NULL,
+	question_answer_categorie TEXT NOT NULL,
+	question_answer_question TEXT NOT NULL,
+	CONSTRAINT question_already_answered_PK PRIMARY KEY (gamer_id,question_answer_categorie,question_answer_question)
+);''')
+    query_execute(cur, f'''CREATE INDEX question_already_answered_gamer_id_IDX ON question_already_answered (gamer_id,question_answer_categorie);''')
+
     # CREATE TABLE "param"
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS param (

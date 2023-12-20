@@ -11,7 +11,6 @@ class Gamer(pygame.sprite.Sprite):
         self.player_name = player_name
         self.x = x
         self.y = y
-        self.camembert_colors = []
         self.camembert_part = [] #ou voir pour mettre 0 plutot
         self.score = 0
         self.sound = []

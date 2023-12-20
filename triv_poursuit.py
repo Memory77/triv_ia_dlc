@@ -29,6 +29,23 @@ def draw_button(screen, text, x, y, width, height, active_color, inactive_color,
     screen.blit(text_surf, text_rect)
     
 
+def auto_wrap(text: str, nb_characters: int) -> str:
+    # permet de faire les retours à la ligne automatiquement
+    words = text.split(' ')
+    wrapped_lines = []
+    
+    for word in words:
+        if len(wrapped_lines) == 0:
+            wrapped_lines.append('')
+        test_line = wrapped_lines[-1] + word + ' '
+        
+        if len(test_line) < nb_characters:
+            wrapped_lines[-1] = test_line
+        else:
+            wrapped_lines.append(word + ' ')
+
+    return wrapped_lines
+
     
 # AFFICHAGE PYGAME
 
@@ -147,6 +164,7 @@ etat_jeu = ETAT_LANCER_DE
 current_player_index = 0
 dice_roll = 0
 dice_rolled = False
+question = ""
 
 # Boucle principale
 running = True
@@ -201,6 +219,7 @@ while running:
             if player_moves == 0 and dice_rolled:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
+                    question = ""
                     dice_rolled = False
                     dice_roll = 0
                     etat_jeu = ETAT_LANCER_DE 
@@ -268,13 +287,22 @@ while running:
         reponse_3_rect = pygame.Rect(button_x, 350, button_width, button_height)
         reponse_4_rect = pygame.Rect(button_x, 400, button_width, button_height)
         
+
+        # catégorie et question
+        question_button_y = 200
+        draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, active_color, inactive_color, 50) # catégorie
+        question_button_y += 50
+        if question == "":
+            question = sql_game.question(case_categorie_id)
+            question_wrapped = auto_wrap(question, 30)
+        for line in question_wrapped:
+            draw_button(screen, line, button_x, question_button_y, button_width, 20, active_color, inactive_color, 20) # question
+            question_button_y += 20
         
-        la_question = "Qu'est ce que l'IA ? (test)"
-        draw_button(screen, la_question, button_x, 200, button_width, button_height, active_color, inactive_color, 40)
-        draw_button(screen, "la bonne réponse", button_x, 250, button_width, button_height, active_color, inactive_color, 35)
-        draw_button(screen, "suggestion_2", button_x, 300, button_width, button_height, active_color, inactive_color, 35)
-        draw_button(screen, "suggestion_3", button_x, 350, button_width, button_height, active_color, inactive_color, 35)
-        draw_button(screen, "suggestion_4", button_x, 400, button_width, button_height, active_color, inactive_color, 35)
+        # réponses
+        for answer in sql_game.answers(case_categorie_id, question):
+            draw_button(screen, answer[0], button_x, question_button_y, button_width, button_height, active_color, inactive_color, 35)
+            question_button_y += 50
         
         reponse = None
 
