@@ -18,6 +18,8 @@ camembert_question_points = params[6]
 hole_points = params[7]
 time_points = params[8]
 time_answer_out = params[9]
+end_game_max_points = params[10]
+end_game_max_camembert = params[11]
 
 os.system('clear')
 
@@ -53,7 +55,17 @@ else:
     nb_gamers = 2
     dice = 20
 
-game = NewGame(nb_gamers, dice, board_game_width, board_game_height, simple_question_points, camembert_question_points, hole_points, time_points, time_answer_out)
+game = NewGame(nb_gamers,
+               dice,
+               board_game_width,
+               board_game_height,
+               simple_question_points,
+               camembert_question_points,
+               hole_points,
+               time_points,
+               time_answer_out,
+               end_game_max_points,
+               end_game_max_camembert)
 
 def new_game():
     return game

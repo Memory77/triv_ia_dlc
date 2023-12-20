@@ -7,7 +7,7 @@ INSERT INTO "categorie" VALUES('Culture',255,182,125);
 INSERT INTO "gamer" VALUES(1,'Débo');
 INSERT INTO "gamer" VALUES(2,'Louis');
 INSERT INTO "gamer" VALUES(3,'Chris');
-INSERT INTO "param" VALUES(4,10,8,25,15,100,150,-250,10,30);
+INSERT INTO "param" VALUES(4,10,8,25,15,100,150,-250,10,30,5000,6);
 INSERT INTO "question_answer" VALUES('Actualités IA','qu''est ce que l''IA ?','processus d''imitation de l''intelligence humaine ',1);
 INSERT INTO "question_answer" VALUES('Actualités IA','qu''est ce que l''IA ?','un outil capable de battre les meilleurs joueurs d''échecs du monde ',1);
 INSERT INTO "question_answer" VALUES('Actualités IA','qu''est ce que l''IA ?','un acronyme signifiant Institut automatisé',0);

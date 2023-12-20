@@ -4,6 +4,7 @@ from gamers import *
 import random
 import main
 import sql_game
+import time
 
 #quelques fonctions, a mettre surement dans un autre fichier plus tard
 def roll_dice(dice: int):
@@ -283,7 +284,8 @@ while running:
         draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, inactive_color, inactive_color, 50) # catégorie
         question_button_y += 50
         if question == "":
-            question = sql_game.question(case_categorie_id)
+            temps_debut = time.time()
+            question = sql_game.question(current_player_index, case_categorie_id)
             question_wrapped = auto_wrap(question, 30)
         for line in question_wrapped:
             draw_button(screen, line, button_x, question_button_y, button_width, 20, inactive_color, inactive_color, 35) # question
@@ -311,11 +313,16 @@ while running:
                         sound = pygame.mixer.Sound('sounds/hahaha.wav')
                         sound.play()
                         reponse = True
+                        temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
+                        if temps_reponse < 0:
+                            temps_reponse = 0
 
             if reponse is not None:
-                if reponse == True: 
+                if reponse == True:
+                    print("temps de réponse OK :", temps_reponse)
                     joueurs[current_player_index].take_camembert(camembert_sprites, game, cell_width, cell_height)
-                    joueurs[current_player_index].score += game.simple_question_points
+                    joueurs[current_player_index].score += game.simple_question_points + temps_reponse * game.time_points
+                    sql_game.question_already_answered(current_player_index, case_categorie_id, question)
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
                 dice_roll = 0
@@ -339,5 +346,9 @@ while running:
 
     # Mettre à jour l'écran
     pygame.display.flip()
+
+    # conditions de victoire
+    if game.victory():
+        running = False
 
 pygame.quit()
