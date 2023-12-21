@@ -27,6 +27,11 @@ Culture,Qui est considéré·e comme le premier programmeur au monde ?,Grace Hop
 Culture,Qui est considéré·e comme le premier programmeur au monde ?,John McCarthy,0
 Culture,Qui est considéré·e comme le premier programmeur au monde ?,Alan Turing,0
 Culture,Qui est considéré·e comme le premier programmeur au monde ?,Ada Lovelace,1
+Culture,Qui est considéré·e comme le premier calculateur électromécanique programmable binaire à virgule flottante ?,Alan Turing,0
+Culture,Qui est considéré·e comme le premier calculateur électromécanique programmable binaire à virgule flottante ?,Ada Lovelace,0
+Culture,Qui est considéré·e comme le premier calculateur électromécanique programmable binaire à virgule flottante ?,Konrad Zuse,1
+Culture,Qui est considéré·e comme le premier calculateur électromécanique programmable binaire à virgule flottante ?,Bill Gates,0
+Culture,Qui est considéré·e comme le premier calculateur électromécanique programmable binaire à virgule flottante ?,Steve Jobs,0
 SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,SELECT * FROM employes,1
 SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,SELECT columns(employes),0
 SQL,Quelle est la syntaxe correcte pour sélectionner toutes les colonnes d'une table appelée 'employes' ?,SHOW ALL employes;,0
@@ -128,11 +133,34 @@ Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distan
 Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distant localement ?,git pull,0
 Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distant localement ?,git clone,1
 Git/GitHub,Quelle commande Git est utilisée pour cloner un référentiel distant localement ?,git push,1
-Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,"git merge' combine les changements de deux branches, tandis que 'git rebase' réécrit l'historique",0
-Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,,1
+Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,"git merge' combine les changements de deux branches, tandis que 'git rebase' réécrit l'historique",1
 Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,"git rebase' combine les changements de deux branches, tandis que 'git merge' réécrit l'historique",0
-Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,Ces commandes ne sont pas utilisées dans Git,1
+Git/GitHub,Quelle est la différence entre 'git merge' et 'git rebase' ?,Ces commandes ne sont pas utilisées dans Git,0
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git branch feature_branch,0
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git checkout -b feature_branch,1
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git switch -c feature_branch,1
 Git/GitHub,Quelle est la commande pour créer une nouvelle branche et basculer vers celle-ci en une seule étape ?,git create feature_branch,0
+Culture,Qui est considéré comme le père de l'informatique moderne pour son travail sur la machine analytique ?,Charles Babbage,1
+Culture,Qui est considéré comme le père de l'informatique moderne pour son travail sur la machine analytique ?,Alan Turing,0
+Culture,Qui est considéré comme le père de l'informatique moderne pour son travail sur la machine analytique ?,Ada Lovelace,0
+Culture,Qui a développé le premier compilateur pour un langage de programmation ?,Grace Hopper,1
+Culture,Qui a développé le premier compilateur pour un langage de programmation ?,Dennis Ritchie,0
+Culture,Qui a développé le premier compilateur pour un langage de programmation ?,John von Neumann,0
+Culture,Qui a fondé Microsoft et est devenu l'un des pionniers de l'industrie informatique ?,Bill Gates,1
+Culture,Qui a fondé Microsoft et est devenu l'un des pionniers de l'industrie informatique ?,Steve Jobs,0
+Culture,Qui a fondé Microsoft et est devenu l'un des pionniers de l'industrie informatique ?,Larry Page,0
+Culture,Qui a inventé le World Wide Web (WWW) en proposant le premier serveur web et le premier navigateur web ?,Tim Berners-Lee,1
+Culture,Qui a inventé le World Wide Web (WWW) en proposant le premier serveur web et le premier navigateur web ?,Marc Andreessen,0
+Culture,Qui a inventé le World Wide Web (WWW) en proposant le premier serveur web et le premier navigateur web ?,Linus Torvalds,0
+Culture,"Qui a créé le langage de programmation BASIC, facilitant ainsi l'accès à la programmation pour les débutants ?",John McCarthy,0
+Culture,"Qui a créé le langage de programmation BASIC, facilitant ainsi l'accès à la programmation pour les débutants ?",Alan Kay,0
+Culture,"Qui a créé le langage de programmation BASIC, facilitant ainsi l'accès à la programmation pour les débutants ?",John Kemeny et Thomas Kurtz,1
+Culture,Qui est considéré comme le père de la théorie des algorithmes modernes ?,Donald Knuth,0
+Culture,Qui est considéré comme le père de la théorie des algorithmes modernes ?,Edsger Dijkstra,0
+Culture,Qui est considéré comme le père de la théorie des algorithmes modernes ?,Alan Turing,1
+Culture,Qui est connu pour son développement du langage de programmation C et pour avoir contribué au développement du système d'exploitation Unix ?,Dennis Ritchie,1
+Culture,Qui est connu pour son développement du langage de programmation C et pour avoir contribué au développement du système d'exploitation Unix ?,Ken Thompson,0
+Culture,Qui est connu pour son développement du langage de programmation C et pour avoir contribué au développement du système d'exploitation Unix ?,Linus Torvalds,0
+Culture,Qui a créé le concept de la programmation orientée objet et développé le langage de programmation Simula ?,Alan Kay,0
+Culture,Qui a créé le concept de la programmation orientée objet et développé le langage de programmation Simula ?,Grace Hopper,0
+Culture,Qui a créé le concept de la programmation orientée objet et développé le langage de programmation Simula ?,Ole-Johan Dahl et Kristen Nygaard,1

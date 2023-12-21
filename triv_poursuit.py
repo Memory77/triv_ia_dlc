@@ -50,6 +50,10 @@ pygame.init()
 
 pygame.mixer.init() 
 
+music = pygame.mixer.music.load('sounds/moonwalker.wav')
+pygame.mixer.music.set_volume(0.1) #1.0 volume max
+pygame.mixer.music.play(-1)
+
 width, height = 1800, 1000  # Ajustez selon vos besoins
 screen = pygame.display.set_mode((width, height))
 
@@ -111,10 +115,15 @@ for gamer in game_gamers_sprite:
     gamer_sprites.add(gamer)
     gamer.set_position(gamer.y, gamer.x, cell_width, cell_height)
     gamer.set_params(gamer.personnage)
-print('Que le jeu TRIV POURSUITE IA COMMENCE !\n règles du jeu : à definir')
+print(f'''Que le jeu TRIV POURSUITE IA COMMENCE !
+      
+      Tu dois avoir ton score supérieur ou égale à 5000 ou récolter les {game.end_game_max_camembert} camemberts
+      en répondant aux questions pour remporter la victoire !
+      Bonne chance :) 
+      ''')
 
 #creation des camemberts
-camembert_red = Element(0, 0, "camembert", "pink")
+camembert_pink = Element(0, 0, "camembert", "pink")
 camembert_green = Element(0, 0, "camembert", "green")
 camembert_blue = Element(0, 0, "camembert", "blue")
 camembert_yellow = Element(0, 0, "camembert", "yellow")
@@ -122,7 +131,7 @@ camembert_purple = Element(0, 0, "camembert", "purple")
 camembert_orange = Element(0, 0, "camembert", "orange")
 
 camembert_sprites = pygame.sprite.Group()
-camembert_sprites.add(camembert_red)
+camembert_sprites.add(camembert_pink)
 camembert_sprites.add(camembert_green)
 camembert_sprites.add(camembert_blue)
 camembert_sprites.add(camembert_yellow)
@@ -131,34 +140,38 @@ camembert_sprites.add(camembert_orange)
 
 #création des trous
 fall_one = Element(0, 0, "fall")
+fall_two = Element(0, 0, "fall")
 
 fall_sprites = pygame.sprite.Group()
 fall_sprites.add(fall_one)
-
+fall_sprites.add(fall_two)
 
 #requalibration de la position et de l'image du camembert (6 camemberts disposés dans le plateau)
-camembert_red.set_position(0, 24, cell_width, cell_height)
-camembert_red.set_image()
+camembert_pink.set_position(2, 11, cell_width, cell_height)
+camembert_pink.set_image()
 
-camembert_green.set_position(14, 24, cell_width, cell_height)
+camembert_green.set_position(11, 21, cell_width, cell_height)
 camembert_green.set_image()
 
-camembert_blue.set_position(5, 13, cell_width, cell_height)
+
+camembert_blue.set_position(10, 5, cell_width, cell_height)
 camembert_blue.set_image()
 
-camembert_yellow.set_position(0, 0, cell_width, cell_height)
+camembert_yellow.set_position(2, 1, cell_width, cell_height)
 camembert_yellow.set_image()
 
-camembert_purple.set_position(14, 0, cell_width, cell_height)
+camembert_purple.set_position(7, 12, cell_width, cell_height)
 camembert_purple.set_image()
 
-camembert_orange.set_position(7, 13, cell_width, cell_height)
+camembert_orange.set_position(2, 20, cell_width, cell_height)
 camembert_orange.set_image()
 
 #idem pour le trou
 fall_one.set_position(10, 13, cell_width, cell_height)
 fall_one.set_image()
 
+fall_two.set_position(3, 13, cell_width, cell_height)
+fall_two.set_image()
 
 # États de jeu
 ETAT_LANCER_DE = 1
@@ -217,6 +230,7 @@ while running:
                 elif event.key == pygame.K_DOWN:
                     joueurs[current_player_index].move("down", cell_height, cell_width, game)
                     player_moves -= 1
+                joueurs[current_player_index].check_fall(fall_sprites, gamer_sprites, cell_width, cell_height, game)
                 on_camembert = joueurs[current_player_index].check_camembert(camembert_sprites)
                 if on_camembert:
                     etat_jeu = ETAT_QUESTION
@@ -252,10 +266,10 @@ while running:
 
     for gamer in gamer_sprites:
         draw_button(screen, gamer.player_name, button_x_, button_y_, 150, button_height, active_color, inactive_color,25)
-        draw_button(screen, f"{gamer.score}   {len(gamer.camembert_part)}/5", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
+        draw_button(screen, f"{gamer.score}    {len(gamer.camembert_part)}/{game.end_game_max_camembert}", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
 
         # mise à jour des positions des boutons pour le prochain joueur
-        button_x_ += 120
+        button_x_ += 140
         button_count += 1
 
         # Passer à la ligne suivante si le nombre maximal de boutons est atteint
@@ -310,9 +324,9 @@ while running:
                 if answers_rect[answer_id].collidepoint(event.pos):
                     reponse = False
                     if good_answers[answer_id] == 1:
-                        sound = pygame.mixer.Sound('sounds/hahaha.wav')
-                        sound.play()
                         reponse = True
+                        # sound = pygame.mixer.Sound('sounds/good_answer.wav')
+                        # sound.play()
                         temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
                         if temps_reponse < 0:
                             temps_reponse = 0
@@ -320,13 +334,14 @@ while running:
             if reponse is not None:
                 if reponse == True:
                     print("temps de réponse OK :", temps_reponse)
-                    joueurs[current_player_index].take_camembert(camembert_sprites, game, cell_width, cell_height)
+                    joueurs[current_player_index].take_camembert(camembert_sprites, cell_width, cell_height, game)
                     joueurs[current_player_index].score += game.simple_question_points + temps_reponse * game.time_points
                     sql_game.question_already_answered(current_player_index, case_categorie_id, question)
                 etat_jeu = ETAT_LANCER_DE
                 dice_rolled = False
                 dice_roll = 0
                 current_player_index = (current_player_index + 1) % main.nb_gamers
+                joueurs[current_player_index].yell()
                 question = ""
                 answers_rect = []
                 good_answers = []

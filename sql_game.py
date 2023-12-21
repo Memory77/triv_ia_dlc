@@ -157,10 +157,12 @@ def gamer_choice_added(gamers_id: list):
     personnage = int(input('''Quel personnage veux-tu prendre ?
 1 : Deadpool
 2 : Captain America
-3 : orc
-4 : un perso dark
-5 : un deuxieme perso encore plus dark
-6 : un viking
+3 : Orc
+4 : Perso dark
+5 : Perso encore plus dark
+6 : Viking
+7 : Dracofeu
+8 : Naruto
 
 > '''))
 
