@@ -92,7 +92,6 @@ class Gamer(pygame.sprite.Sprite):
             self.sound.append('dragon-spell.wav')
         elif personnage == 8:
             self.image = pygame.image.load('img/big_player_eight.png')
-            self.sound.append('naruto-chakra.wav')
             self.sound.append('ninja.wav')
         else:
             self.image = pygame.image.load('img/big_player_tree.png')
@@ -120,7 +119,6 @@ class Gamer(pygame.sprite.Sprite):
                 camembert.kill()
                 self.camembert_part.append(camembert.color)
                 
-
                 #generation d'un nouveau camembert aléatoirement 
                 number_min = 0
                 number_rows = game.board_game_height - 1
@@ -153,8 +151,7 @@ class Gamer(pygame.sprite.Sprite):
                     self.score += game.hole_points
                     sound = pygame.mixer.Sound('sounds/fall.wav')
                     sound.play()
-                    print(y)
-                    print(x)
+                    
                 if gamer.rect.colliderect(fall.rect):
                     #set position aléatoirement 
                     number_min = 0
@@ -167,8 +164,7 @@ class Gamer(pygame.sprite.Sprite):
                     gamer.score += game.hole_points
                     sound = pygame.mixer.Sound('sounds/fall.wav')
                     sound.play()
-                    print(y)
-                    print(y)
+                   
 
 
 class Element(pygame.sprite.Sprite):

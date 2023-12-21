@@ -97,8 +97,8 @@ for categorie in sql_game.categories():
     cat_id.append(categorie[0])
     colors[categorie[0]] = (categorie[1], categorie[2], categorie[3])
 
-np.random.seed(5)#graine pour figer le random choice mais c pas obligé en soit
-game_board = np.random.choice(cat_id, size=(15, 25))
+np.random.seed(5)#graine pour figer le random choice 
+game_board = np.random.choice(cat_id, size=(main.board_game_height, main.board_game_width))
 
 
 # import du nouveau jeu
@@ -124,7 +124,7 @@ for gamer in game_gamers_sprite:
     gamer.set_params(gamer.personnage)
 print(f'''Que le jeu TRIV POURSUITE IA COMMENCE !
       
-      Tu dois avoir ton score supérieur ou égale à {game.end_game_max_points} ou récolter les {game.end_game_max_camembert} camemberts
+      Tu dois avoir ton score supérieur ou égale à {game.end_game_max_points} ou récolter les {game.end_game_max_camembert} camemberts de couleur
       en répondant aux questions pour remporter la victoire !
       Bonne chance :) 
       ''')
@@ -238,11 +238,11 @@ while running:
                 elif event.key == pygame.K_DOWN:
                     joueurs[current_player_index].move("down", cell_height, cell_width, game)
                     player_moves -= 1
-                joueurs[current_player_index].check_fall(fall_sprites, gamer_sprites, cell_width, cell_height, game)
                 on_camembert = joueurs[current_player_index].check_camembert(camembert_sprites)
                 if on_camembert:
                     etat_jeu = ETAT_QUESTION
                     player_moves = 0
+                joueurs[current_player_index].check_fall(fall_sprites, gamer_sprites, cell_width, cell_height, game)
             if player_moves == 0 and dice_rolled:
                 etat_jeu = ETAT_QUESTION
                 if event.key == pygame.K_SPACE:  # espace pour la confirmation de la fin du tour
@@ -360,8 +360,8 @@ while running:
                     reponse = False
                     if good_answers[answer_id] == 1:
                         reponse = True
-                        sound = pygame.mixer.Sound('sounds/good_answer.wav')
-                        sound.set_volume(0.5)
+                        sound = pygame.mixer.Sound('sounds/naruto-chakra.wav')
+                        sound.set_volume(0.05)
                         sound.play()
                         temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
                         if temps_reponse < 0:
