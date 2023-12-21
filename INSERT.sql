@@ -11,6 +11,8 @@ INSERT INTO "gamer" VALUES(4,'Saïf');
 INSERT INTO "gamer" VALUES(5,'Capitaine');
 INSERT INTO "gamer" VALUES(6,'Antoine');
 INSERT INTO "gamer" VALUES(7,'Saadia');
+INSERT INTO "gamer" VALUES(8,'Kévin');
+INSERT INTO "param" VALUES(4,10,8,25,15,100,150,-250,10,30,5000,6);
 INSERT INTO "param" VALUES(4,10,8,25,15,100,150,-250,10,30,5000,6);
 INSERT INTO "question_answer" VALUES('Actualités IA','qu''est ce que l''IA ?','processus d''imitation de l''intelligence humaine ',1);
 INSERT INTO "question_answer" VALUES('Actualités IA','qu''est ce que l''IA ?','un outil capable de battre les meilleurs joueurs d''échecs du monde ',1);

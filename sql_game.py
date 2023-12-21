@@ -63,10 +63,11 @@ def question(gamer_id: int, categorie: str):
                         ORDER BY random()
                         LIMIT 1''', 'SELECT')
 
-    if len(res) == 0:
+    
+    if res == None:
         query_execute(cur, f'''
                         DELETE FROM question_already_answered
-                        WHERE id = {gamer_id}
+                        WHERE gamer_id = {gamer_id}
                         AND question_answer_categorie = "{categorie}"
                         ''')
         res = query_execute(cur, f'''
@@ -205,7 +206,7 @@ def gamer_end_game(game_id: int, gamer_id: int, score: int):
 ##################################################
 
 
-def gamer_choice_added(game_id: int, gamers_id: list):
+def gamer_choice_added(game_id: int, gamers_id: list, personnages):
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
     os.system('clear')
@@ -224,17 +225,10 @@ def gamer_choice_added(game_id: int, gamers_id: list):
         print("/!\ FATAL ERROR /!\ 001 : sql_game.py > choix ID joueur")
         sys.exit()
     
-    personnage = int(input('''Quel personnage veux-tu prendre ?
-1 : Deadpool
-2 : Captain America
-3 : Orc
-4 : Perso dark
-5 : Perso encore plus dark
-6 : Viking
-7 : Dracofeu
-8 : Naruto
-
-> '''))
+    print('Quel personnage veux-tu prendre ?')
+    for i in range(1, len(personnages)):
+        print(i, ":", personnages[i])
+    personnage = int(input('\n > '))
 
     try:
         personnage = int(personnage)
@@ -244,7 +238,11 @@ def gamer_choice_added(game_id: int, gamers_id: list):
 
     conn.close()
 
-    link_game_gamer(game_id, id, gamers[id])
+    try:
+        link_game_gamer(game_id, id, gamers[id])
+    except:
+        print("/!\ FATAL ERROR /!\ 003 : sql_game.py > mauvais choix d'ID gamer. L'ID choisi n'est certainement pas dans la BDD")
+        sys.exit()
 
-    return id, gamers[id], personnage
+    return id, gamers[id], personnages[personnage], personnage
 

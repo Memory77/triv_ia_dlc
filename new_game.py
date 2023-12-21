@@ -40,6 +40,28 @@ class NewGame:
         self.gamers = []
         gamers_id = []# pour ne pas ajouter plusieurs fois le même joueur
 
+        # pour le choix des personnages
+        personnages_id = {
+            'Deadpool': 1,
+            'Captain America': 2,
+            'Orc': 3,
+            'Perso dark': 4,
+            'Perso encore plus dark': 5,
+            'Viking': 6,
+            'Dracofeu': 7,
+            'Naruto': 8
+        }
+        personnages = []
+        personnages.append('')
+        personnages.append('Deadpool')
+        personnages.append('Captain America')
+        personnages.append('Orc')
+        personnages.append('Perso dark')
+        personnages.append('Perso encore plus dark')
+        personnages.append('Viking')
+        personnages.append('Dracofeu')
+        personnages.append('Naruto')
+
         for i in range(nb_gamers):
             x_y = True
             time_start = time()
@@ -53,10 +75,10 @@ class NewGame:
                 if board_game[y][x] == "":
                     x_y = False
 
-            id, alias, personnage = sql_game.gamer_choice_added(self.id, gamers_id)
+            id, alias, personnage, pop_id = sql_game.gamer_choice_added(self.id, gamers_id, personnages)
             gamers_id.append(id)
-
-            self.gamers.append(gamers.Gamer(x, y, id, alias, personnage))
+            personnages.pop(pop_id)
+            self.gamers.append(gamers.Gamer(x, y, id, alias, personnages_id[personnage]))
     
     def nb_gamers(self) -> int:
         return len(self.gamers)
