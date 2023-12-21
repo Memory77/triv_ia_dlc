@@ -128,6 +128,68 @@ def question_already_answered(current_player_index: int, case_categorie_id: str,
 
     conn.commit()
     conn.close()
+    
+
+
+def create_game(dice_type: int):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    query_execute(cur, f'''
+    INSERT INTO game (date_start, dice_type) VALUES (datetime('now'), {dice_type})
+    ''', '')
+
+    conn.commit()
+    conn.close()
+    
+
+
+def game_id():
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    res = query_execute(cur, f'''
+    SELECT MAX(id) FROM game
+    ''', 'SELECT')
+
+    conn.close()
+    return res[0]
+
+def link_game_gamer(game_id: int, gamer_id: int, alias: str):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    query_execute(cur, f'''
+    INSERT INTO game_gamer VALUES ({game_id}, {gamer_id}, "{alias}", 0)
+    ''', '')
+
+    conn.commit()
+    conn.close()
+
+def end_game(game_id: int):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    query_execute(cur, f'''
+    UPDATE game SET date_end = datetime('now') WHERE id = {game_id}
+    ''', '')
+
+def gamer_end_game(game_id: int, gamer_id: int, score: int):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    query_execute(cur, f'''
+    UPDATE  game_gamer SET score = {score} WHERE game_id = {game_id} AND gamer_id = {gamer_id}
+    ''', '')
+
+
+    conn.commit()
+    conn.close()
+
+
+
+
+
 
 
 ##################################################
@@ -135,7 +197,7 @@ def question_already_answered(current_player_index: int, case_categorie_id: str,
 ##################################################
 
 
-def gamer_choice_added(gamers_id: list):
+def gamer_choice_added(game_id: int, gamers_id: list):
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
     os.system('clear')
@@ -174,4 +236,7 @@ def gamer_choice_added(gamers_id: list):
 
     conn.close()
 
+    link_game_gamer(game_id, id, gamers[id])
+
     return id, gamers[id], personnage
+
