@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS gamer (
     query_execute(cur, f'''
 CREATE TABLE IF NOT EXISTS game (
     id INTEGER PRIMARY KEY,
-    datetime DATETIME NOT NULL,
+    date_start DATETIME NOT NULL,
+    date_end DATETIME DEFAULT NULL,
     dice_type INTEGER NOT NULL);''')
 
     # CREATE TABLE "game_gamer"
