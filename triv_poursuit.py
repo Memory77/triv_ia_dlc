@@ -325,8 +325,8 @@ while running:
                     reponse = False
                     if good_answers[answer_id] == 1:
                         reponse = True
-                        sound = pygame.mixer.Sound('sounds/good_answer.wav')
-                        sound.play()
+                        # sound = pygame.mixer.Sound('sounds/good_answer.wav')
+                        # sound.play()
                         temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
                         if temps_reponse < 0:
                             temps_reponse = 0

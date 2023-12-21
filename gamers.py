@@ -19,8 +19,10 @@ class Gamer(pygame.sprite.Sprite):
 
     def set_position(self, row, col, cell_width, cell_height):
         # définit la position du sprite basée sur la position de la cellule du tableau
-        self.rect.x = col * cell_width 
-        self.rect.y = row * cell_height 
+        self.rect.x = col * cell_width
+        self.rect.y = row * cell_height
+        self.x = col
+        self.y = row
 
     def move(self, direction, cell_height, cell_width, game):
         sound = pygame.mixer.Sound('sounds/step.wav')

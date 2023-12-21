@@ -162,7 +162,7 @@ def gamer_choice_added(gamers_id: list):
 5 : Perso encore plus dark
 6 : Viking
 7 : Dracofeu
-9 : Naruto
+8 : Naruto
 
 > '''))
 

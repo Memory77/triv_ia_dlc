@@ -24,7 +24,7 @@ end_game_max_camembert = params[11]
 os.system('clear')
 
 # shunter
-if True == False:
+if True == True:
     # nombre de joueur
     nb_gamers = input(f"Combien de joueurs pour cette partie ? (choisir un nombre entre 2 et {max_player}) ")
 
