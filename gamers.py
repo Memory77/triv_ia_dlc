@@ -77,12 +77,10 @@ class Gamer(pygame.sprite.Sprite):
             self.sound.append('orc.wav')
         elif personnage == 4:
             self.image = pygame.image.load('img/big_player_four.png')
-            self.sound.append('ninja.wav')
             self.sound.append('naruto-chakra.wav')
             self.sound.append('ha-ha.wav')
         elif personnage == 5:
             self.image = pygame.image.load('img/big_player_five.png')
-            self.sound.append('ninja.wav')
             self.sound.append('naruto-chakra.wav')
             self.sound.append('ha-ha.wav')
         elif personnage == 6:
@@ -96,8 +94,7 @@ class Gamer(pygame.sprite.Sprite):
         elif personnage == 8:
             self.image = pygame.image.load('img/big_player_eight.png')
             self.sound.append('naruto-chakra.wav')
-            self.sound.append('naruto.wav')
-            self.sound.append('naruto-believe-it.wav')
+            self.sound.append('ninja.wav')
         else:
             self.image = pygame.image.load('img/big_player_tree.png')
             self.sound.append('work-work.wav')
@@ -108,6 +105,7 @@ class Gamer(pygame.sprite.Sprite):
         random_sound = random.choice(self.sound)
         sound = pygame.mixer.Sound(f"sounds/{random_sound}")
         sound.play()
+        
         
        
     def check_camembert(self, camembert_sprites):
@@ -187,6 +185,8 @@ class Element(pygame.sprite.Sprite):
         # définit la position du sprite basée sur la position de la cellule du tableau
         self.rect.x = col * cell_width + 15
         self.rect.y = row * cell_height  + 10
+        self.x = col
+        self.y = row
 
     def set_image(self):
         if self.name_element == "fall":

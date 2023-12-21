@@ -63,11 +63,9 @@ class NewGame:
         for gamer in self.gamers:
             yield gamer
     
-
+    #retourne le gagnant si les conditions de victoire sont verifiés
     def victory(self) -> bool:
         for gamer in self.gamers:
-            if gamer.score >= self.end_game_max_points:
-                return True
-            if len(gamer.camembert_part) >= self.end_game_max_camembert:
-                return True
-        return False
+            if gamer.score >= self.end_game_max_points or len(gamer.camembert_part) >= self.end_game_max_camembert:
+                return gamer 
+        return None
