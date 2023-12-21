@@ -12,7 +12,7 @@ class Gamer(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.camembert_part = [] #ou voir pour mettre 0 plutot
-        self.score = 4900
+        self.score = 0
         self.sound = []
         self.personnage = personnage
         self.current_camembert = None
@@ -119,9 +119,7 @@ class Gamer(pygame.sprite.Sprite):
                 self.score += game.camembert_question_points
                 camembert.kill()
                 self.camembert_part.append(camembert.color)
-                sound = pygame.mixer.Sound('sounds/good_answer.wav')
-                sound.set_volume(0.5)
-                sound.play()
+                
 
                 #generation d'un nouveau camembert aléatoirement 
                 number_min = 0
