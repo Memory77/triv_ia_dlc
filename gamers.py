@@ -12,7 +12,7 @@ class Gamer(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.camembert_part = [] #ou voir pour mettre 0 plutot
-        self.score = 4900
+        self.score = 4000
         self.sound = []
         self.personnage = personnage
         self.current_camembert = None
