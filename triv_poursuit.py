@@ -215,7 +215,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
+        
+        
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if dice_rolled == False and button_x + button_width > event.pos[0] > button_x and button_y + button_height > event.pos[1] > button_y:
                 dice_roll = roll_dice(game.dice)
@@ -261,7 +262,7 @@ while running:
     pygame.draw.rect(screen, interface_bg_color, interface_rect)
     # pour afficher l'image de l'interface
     screen.blit(interface_image, (interface_x, interface_y))
-    
+
     ### === mise à jour des scores
     button_start_x = 1300  
     button_start_y = 800   
@@ -290,16 +291,43 @@ while running:
         texte_bouton = f"{joueurs[current_player_index].player_name} : Lancer le dé"
         draw_button(screen, texte_bouton, button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         if dice_roll > 0:
-            draw_button(screen, f"{player_moves}", 1450, 200, 200, button_height, active_color, inactive_color, 40)
-            
-            
+            dice_color = (251, 239, 197)
+            draw_button(screen, f"{player_moves}", 1450, 200, 200, button_height, dice_color, dice_color, 40)
+        
+        #=== affichage de la categorie selon la position du gamer 
+        ##id categorie de la position du gamer 
+        case_categorie_id = game_board[joueurs[current_player_index].y][joueurs[current_player_index].x]
+        # Récupération de la couleur de la catégorie
+        category_color = None
+        for categorie in sql_game.categories():
+            if case_categorie_id == categorie[0]:
+                category_color = (categorie[1], categorie[2], categorie[3])
+                break
+        # Dessiner le bouton de la catégorie avec la couleur correcte
+        if category_color is not None:
+            category_button_y = 300
+            draw_button(screen, case_categorie_id, button_x, category_button_y, button_width, button_height, category_color, category_color, 50) # catégorie
+
+        ### === affichage des différentes categories
+        ##id categorie de la position du gamer 
+        category_button_y = 550
+        category_button_x = 1450
+        category_button_width = 200
+        category_button_height = 40
+        incr_y = 40
+        for categorie in sql_game.categories():
+            category_color = (categorie[1], categorie[2], categorie[3])
+            draw_button(screen, categorie[0], category_button_x, category_button_y, category_button_width, category_button_height, category_color, category_color, 25)
+            category_button_y += incr_y
+
     elif etat_jeu == ETAT_QUESTION:
         
         draw_button(screen, f"{joueurs[current_player_index].player_name}", button_x, button_y, button_width, button_height, active_color, inactive_color, 40)
         
         ##id categorie de la position du gamer 
         case_categorie_id = game_board[joueurs[current_player_index].y][joueurs[current_player_index].x]
-
+        
+        
         # catégorie et question
         question_button_y = 200
         draw_button(screen, case_categorie_id, button_x, question_button_y, button_width, button_height, inactive_color, inactive_color, 50) # catégorie
@@ -332,8 +360,9 @@ while running:
                     reponse = False
                     if good_answers[answer_id] == 1:
                         reponse = True
-                        # sound = pygame.mixer.Sound('sounds/good_answer.wav')
-                        # sound.play()
+                        sound = pygame.mixer.Sound('sounds/good_answer.wav')
+                        sound.set_volume(0.5)
+                        sound.play()
                         temps_reponse = game.time_answer_out - int(time.time()-temps_debut)
                         if temps_reponse < 0:
                             temps_reponse = 0
