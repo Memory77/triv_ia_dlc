@@ -23,6 +23,8 @@ class NewGame:
                  end_game_max_camembert: int):
         
         self.dice = dice
+        sql_game.create_game(dice)
+        self.id = sql_game.game_id()
 
         board_game = [["" for y in range(board_game_width)] for x in range(board_game_height)]
         self.board_game_width = board_game_width
@@ -51,7 +53,7 @@ class NewGame:
                 if board_game[y][x] == "":
                     x_y = False
 
-            id, alias, personnage = sql_game.gamer_choice_added(gamers_id)
+            id, alias, personnage = sql_game.gamer_choice_added(self.id, gamers_id)
             gamers_id.append(id)
 
             self.gamers.append(gamers.Gamer(x, y, id, alias, personnage))
