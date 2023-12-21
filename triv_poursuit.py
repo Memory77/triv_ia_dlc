@@ -50,9 +50,16 @@ pygame.init()
 
 pygame.mixer.init() 
 
-music = pygame.mixer.music.load('sounds/moonwalker.wav')
-pygame.mixer.music.set_volume(0.1) #1.0 volume max
+music_list = ['moonwalker.wav',
+              'Fort_Boyard.wav',
+              ]
+random_music = random.choice(music_list)
+music = pygame.mixer.music.load(f"sounds/{random_music}")
+pygame.mixer.music.set_volume(0.3) #1.0 volume max
+if random_music == 'Fort_Boyard.wav':
+    pygame.mixer.music.set_volume(0.6)
 pygame.mixer.music.play(-1)
+
 
 width, height = 1800, 1000  # Ajustez selon vos besoins
 screen = pygame.display.set_mode((width, height))
@@ -117,7 +124,7 @@ for gamer in game_gamers_sprite:
     gamer.set_params(gamer.personnage)
 print(f'''Que le jeu TRIV POURSUITE IA COMMENCE !
       
-      Tu dois avoir ton score supérieur ou égale à 5000 ou récolter les {game.end_game_max_camembert} camemberts
+      Tu dois avoir ton score supérieur ou égale à {game.end_game_max_points} ou récolter les {game.end_game_max_camembert} camemberts
       en répondant aux questions pour remporter la victoire !
       Bonne chance :) 
       ''')
@@ -269,7 +276,7 @@ while running:
         draw_button(screen, f"{gamer.score}    {len(gamer.camembert_part)}/{game.end_game_max_camembert}", button_x_, button_y_ + 50, 150, button_height, active_color, inactive_color,25)
 
         # mise à jour des positions des boutons pour le prochain joueur
-        button_x_ += 140
+        button_x_ += 130
         button_count += 1
 
         # Passer à la ligne suivante si le nombre maximal de boutons est atteint
@@ -358,11 +365,24 @@ while running:
     fall_sprites.draw(screen)
     fall_sprites.update()
 
+    
+    # conditions de victoire et retourne le gagnant
+    winner = game.victory()
+
+    if winner is not None:
+        win_text = f"Le gagnant est {winner.player_name} avec un score de {winner.score}"
+        print(win_text)
+        draw_button(screen, win_text, 200, 200, 900, 500, inactive_color, inactive_color, 50)
+        screen.blit(winner.image, (620, 500))
+        music = pygame.mixer.music.load('sounds/Benny_Hill_Theme.wav')
+        pygame.mixer.music.set_volume(0.5) #1.0 volume max
+        pygame.mixer.music.play(-1)
+        pygame.display.flip()
+        #blit l'image en dessous du bouton avec un zoom
+        pygame.time.delay(10000) #en miliseconde 
+        running = False
+    
     # Mettre à jour l'écran
     pygame.display.flip()
-
-    # conditions de victoire
-    if game.victory():
-        running = False
 
 pygame.quit()
