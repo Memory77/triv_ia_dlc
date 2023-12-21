@@ -86,7 +86,6 @@ class Gamer(pygame.sprite.Sprite):
         elif personnage == 6:
             self.image = pygame.image.load('img/big_player_six.png')
             self.sound.append('alright-we-turn-it-on-im-very-thirsty.wav')
-            self.sound.append('alright-fine.wav')
             self.sound.append('just-want-you.wav')
         elif personnage == 7:
             self.image = pygame.image.load('img/big_player_seven.png')
