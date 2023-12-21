@@ -381,11 +381,13 @@ while running:
         #blit l'image en dessous du bouton avec un zoom
         pygame.time.delay(10000) #en miliseconde 
         running = False
-        sql_game.end_game(game.id)
-        for gamer in gamer_sprites:
-            sql_game.gamer_end_game(game.id, gamer.id, gamer.score)
     
     # Mettre à jour l'écran
     pygame.display.flip()
 
+# enregistrement de la partie
+sql_game.end_game(game.id)
+for gamer in gamer_sprites:
+    sql_game.gamer_end_game(game.id, gamer.id, gamer.score)
+import last_game
 pygame.quit()
