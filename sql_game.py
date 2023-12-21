@@ -93,7 +93,8 @@ def answers(categorie: str, question: str):
                         SELECT answer, good_answer
                         FROM question_answer
                         WHERE categorie_name = "{categorie}"
-                        AND question = "{question}"''', 'SELECT_ALL')
+                        AND question = "{question}"
+                        ''', 'SELECT_ALL')
     conn.close()
 
     return res
@@ -166,6 +167,7 @@ def link_game_gamer(game_id: int, gamer_id: int, alias: str):
     conn.commit()
     conn.close()
 
+
 def end_game(game_id: int):
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
@@ -173,6 +175,13 @@ def end_game(game_id: int):
     query_execute(cur, f'''
     UPDATE game SET date_end = datetime('now') WHERE id = {game_id}
     ''', '')
+    print(f'''
+    UPDATE game SET date_end = datetime('now') WHERE id = {game_id}
+    ''')
+
+    conn.commit()
+    conn.close()
+
 
 def gamer_end_game(game_id: int, gamer_id: int, score: int):
     conn = sqlite3.connect('triv_ia_dlc.db')
@@ -181,7 +190,6 @@ def gamer_end_game(game_id: int, gamer_id: int, score: int):
     query_execute(cur, f'''
     UPDATE  game_gamer SET score = {score} WHERE game_id = {game_id} AND gamer_id = {gamer_id}
     ''', '')
-
 
     conn.commit()
     conn.close()
