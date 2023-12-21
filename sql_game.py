@@ -128,6 +128,21 @@ def question_already_answered(current_player_index: int, case_categorie_id: str,
 
     conn.commit()
     conn.close()
+    
+
+
+def create_game(current_player_index: int, case_categorie_id: str, question: str):
+    conn = sqlite3.connect('triv_ia_dlc.db')
+    cur = conn.cursor()
+    
+    query_execute(cur, f'''
+    INSERT INTO question_already_answered VALUES ({current_player_index}, "{case_categorie_id}", "{question}")
+    ''', '')
+
+    conn.commit()
+    conn.close()
+
+
 
 
 ##################################################

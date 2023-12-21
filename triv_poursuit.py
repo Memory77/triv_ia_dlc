@@ -363,6 +363,7 @@ while running:
 
     # conditions de victoire
     if game.victory():
+    
         running = False
 
 pygame.quit()
