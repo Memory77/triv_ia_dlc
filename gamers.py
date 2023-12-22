@@ -112,7 +112,7 @@ class Gamer(pygame.sprite.Sprite):
                 return True
         return False
     
-    def take_camembert(self, camembert_sprites, cell_width, cell_height, game):
+    def take_camembert(self, camembert_sprites, cell_width, cell_height, game, game_board):
         for camembert in camembert_sprites:
             if self.rect.colliderect(camembert.rect) and camembert.color not in self.camembert_part:
                 self.score += game.camembert_question_points
@@ -123,8 +123,12 @@ class Gamer(pygame.sprite.Sprite):
                 number_min = 0
                 number_rows = game.board_game_height - 1
                 number_cols = game.board_game_width - 1
-                y = random.randint(number_min, number_rows)
-                x = random.randint(number_min, number_cols)
+                # on remet un camembert d'une couleur donnée sur une case de la même couleur
+                color_question_target = ""
+                while color_question_target != camembert.color_question:
+                    y = random.randint(number_min, number_rows)
+                    x = random.randint(number_min, number_cols)
+                    color_question_target = game_board[y][x]
                 
                 new_camembert = Element(0, 0, "camembert", camembert.color)
                 new_camembert.set_position(y, x, cell_width, cell_height)
@@ -188,14 +192,20 @@ class Element(pygame.sprite.Sprite):
 
         elif self.name_element == "camembert":
             if self.color == "pink":
+                self.color_question = "SQL"
                 self.image = pygame.image.load('img/pink.png')
             elif self.color == "blue":
                 self.image = pygame.image.load('img/blue.png')
+                self.color_question = "Ligne de commandes"
             elif self.color == "green":
                 self.image = pygame.image.load('img/green.png')
+                self.color_question = "Python"
             elif self.color == "yellow":
                 self.image = pygame.image.load('img/yellow.png')
+                self.color_question = "Actualités IA"
             elif self.color == "purple":
                 self.image = pygame.image.load('img/purple.png')
+                self.color_question = "Git/GitHub"
             elif self.color == "orange":
                 self.image = pygame.image.load('img/orange.png')
+                self.color_question = "Culture"

@@ -370,7 +370,7 @@ while running:
             if reponse is not None:
                 if reponse == True:
                     print("temps de réponse OK :", temps_reponse)
-                    joueurs[current_player_index].take_camembert(camembert_sprites, cell_width, cell_height, game)
+                    joueurs[current_player_index].take_camembert(camembert_sprites, cell_width, cell_height, game, game_board)
                     joueurs[current_player_index].score += game.simple_question_points + temps_reponse * game.time_points
                     sql_game.question_already_answered(current_player_index, case_categorie_id, question)
                 etat_jeu = ETAT_LANCER_DE
