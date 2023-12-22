@@ -162,7 +162,7 @@ def link_game_gamer(game_id: int, gamer_id: int, alias: str):
     cur = conn.cursor()
     
     query_execute(cur, f'''
-    INSERT INTO game_gamer VALUES ({game_id}, {gamer_id}, "{alias}", 0)
+    INSERT INTO game_gamer VALUES ({game_id}, {gamer_id}, "{alias}", 0, 0)
     ''', '')
 
     conn.commit()
@@ -184,12 +184,16 @@ def end_game(game_id: int):
     conn.close()
 
 
-def gamer_end_game(game_id: int, gamer_id: int, score: int):
+def gamer_end_game(game_id: int, gamer_id: int, score: int, camembert: int):
     conn = sqlite3.connect('triv_ia_dlc.db')
     cur = conn.cursor()
     
     query_execute(cur, f'''
-    UPDATE  game_gamer SET score = {score} WHERE game_id = {game_id} AND gamer_id = {gamer_id}
+                  UPDATE  game_gamer
+                  SET score = {score},
+                  camembert = {camembert}
+                  WHERE game_id = {game_id}
+                  AND gamer_id = {gamer_id}
     ''', '')
 
     conn.commit()

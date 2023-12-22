@@ -417,6 +417,6 @@ while running:
 # enregistrement de la partie
 sql_game.end_game(game.id)
 for gamer in gamer_sprites:
-    sql_game.gamer_end_game(game.id, gamer.id, gamer.score)
+    sql_game.gamer_end_game(game.id, gamer.id, gamer.score, len(gamer.camembert_part))
 import last_game
 pygame.quit()

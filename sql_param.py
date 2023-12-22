@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS game_gamer (
 	gamer_id INTEGER NOT NULL,
 	alias TEXT NOT NULL,
 	score INTEGER NOT NULL,
+	camembert INTEGER NOT NULL,
 	CONSTRAINT game_gamer_PK PRIMARY KEY (game_id,gamer_id)
     CONSTRAINT game_gamer_FK FOREIGN KEY (game_id) REFERENCES game(id),
 	CONSTRAINT game_gamer_FK_1 FOREIGN KEY (gamer_id) REFERENCES gamer(id)

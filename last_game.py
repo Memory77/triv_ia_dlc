@@ -9,11 +9,11 @@ conn = sqlite3.connect('triv_ia_dlc.db')
 cur = conn.cursor()
 
 cur.execute(f'''
-SELECT STRFTIME('%d/%m/%Y', date_start), (STRFTIME('%s', date_end) - STRFTIME('%s', date_start)) / 60, dice_type, alias, score
+SELECT STRFTIME('%d/%m/%Y', date_start), (STRFTIME('%s', date_end) - STRFTIME('%s', date_start)) / 60, dice_type, alias, score, camembert
 FROM game g
 JOIN game_gamer gg ON gg.game_id = g.id  
 WHERE id IN (SELECT MAX(id) FROM game)
-ORDER BY score DESC''')
+ORDER BY camembert, score DESC''')
 res = cur.fetchall()
 
 conn.close()
@@ -23,7 +23,7 @@ for gamer in res:
     date = gamer[0]
     duration = gamer[1]
     dice_type = gamer[2]
-    gamers += f"{gamer[3]} >>> score {gamer[4]}\n"
+    gamers += f"{gamer[3]} >>> score : {gamer[4]} >>> nombre de camemberts : {gamer[5]}\n"
 
 os.system('clear')
 print('''
